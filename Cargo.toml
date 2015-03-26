@@ -1,0 +1,11 @@
+[package]
+
+name = "strava-rs"
+version = "0.0.1"
+authors = ["Joe Wilm <jdwilm@gmail.com>"]
+
+[dependencies.hyper]
+git = "https://github.com/hyperium/hyper.git"
+
+[dependencies.time]
+version = "*"
