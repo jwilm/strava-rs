@@ -14,6 +14,8 @@ use resources::enums::ClubType;
 use resources::enums::SportType;
 use resources::enums::WorkoutType;
 
+mod athlete;
+use self::athlete::Athlete;
 
 /// Gear type able to represent bikes/shoes/etc.
 ///
@@ -58,42 +60,6 @@ pub struct Club {
     country: String,
     private: bool,
     member_count: i32
-}
-
-/// Athletes are Strava users, Strava users are athletes.
-///
-/// The object is returned in detailed, summary or meta representations.
-///
-/// See: http://strava.github.io/api/v3/athlete/
-#[allow(dead_code)]
-pub struct Athlete {
-    id: i32,
-    resource_state: ResourceState,
-    firstname: String,
-    lastname: String,
-    profile_medium: String,
-    profile: String,
-    city: String,
-    state: String,
-    country: String,
-    sex: String,
-    friend: String,
-    follower: String,
-    premium: bool,
-    created_at: Timespec,
-    updated_at: Timespec,
-    approve_followers: bool,
-    follower_count: i32,
-    friend_count: i32,
-    mutual_friend_count: i32,
-    date_preference: String,
-    measurement_preference: String,
-    email: String,
-    ftp: i32,
-    weight: f32,
-    clubs: Vec<Club>,
-    shoes: Vec<Gear>,
-    bikes: Vec<Gear>
 }
 
 pub struct ActivityMap;
@@ -155,3 +121,5 @@ pub struct Activity {
     splits_standard: Vec<Split>,
     best_efforts: Vec<SegmentEffort>
 }
+
+

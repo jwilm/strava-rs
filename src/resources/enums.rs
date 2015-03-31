@@ -1,14 +1,20 @@
 use std::str::FromStr;
+use std::default::Default;
 
 /// Objects will be returned with a certain ResourceState
 ///
 /// Detailed contains the most data and Meta the least.
 #[allow(dead_code)]
-#[derive(Debug, FromPrimitive)]
+#[derive(Debug, FromPrimitive, PartialEq)]
 pub enum ResourceState {
-    Meta = 1,
+    Unknown,
+    Meta,
     Summary,
     Detailed
+}
+
+impl Default for ResourceState {
+    fn default () -> ResourceState { ResourceState::Unknown }
 }
 
 /// Frame type for bikes
@@ -144,4 +150,10 @@ fn resource_state_values() {
     assert_eq!(ResourceState::Meta as i32, 1);
     assert_eq!(ResourceState::Summary as i32, 2);
     assert_eq!(ResourceState::Detailed as i32, 3);
+}
+
+#[test]
+fn default_resource_state() {
+    let default_state: ResourceState = Default::default();
+    assert_eq!(default_state, ResourceState::Unknown);
 }
