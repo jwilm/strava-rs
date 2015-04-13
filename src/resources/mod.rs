@@ -14,7 +14,7 @@ use resources::enums::ClubType;
 use resources::enums::SportType;
 use resources::enums::WorkoutType;
 
-mod athlete;
+pub mod athlete;
 use self::athlete::Athlete;
 
 /// Gear type able to represent bikes/shoes/etc.

@@ -1,31 +1,34 @@
+/// This HTTP client wrapper exists so that if hyper's http client becomes
+/// unsupported, putting in a different client only required modifying this one
+/// module.
+///
 extern crate hyper;
 
 use std::option::Option;
 use std::collections::HashMap;
 
-// use std::io::Read;
-
-// use hyper::header::Connection;
-// use hyper::header::ConnectionOption;
-//
+// TODO
 struct Response;
-struct HTTPError;
+
+// TODO
+enum HTTPError {
+    Failed
+}
 
 struct Request<'a> {
     client: hyper::Client<hyper::net::HttpConnector<'a>>
 }
 
 impl<'a> Request<'a> {
-    fn new() -> Request {
+    pub fn new() -> Request<'a> {
         Request { client: hyper::Client::new() }
     }
 
-    fn exec() -> Result<Response, HTTPError> {
-        Ok(Response);
+    pub fn exec(&self) -> Result<Response, HTTPError> {
+        // TODO
+        Err(HTTPError::Failed)
     }
 }
-
-// struct Response;
 
 pub struct Builder {
     method: Method,
@@ -34,7 +37,7 @@ pub struct Builder {
     headers: HashMap<String, String>
 }
 
-impl Builder {
+impl<'a> Builder {
     fn new() -> Builder {
         Builder {
             method: Method::GET,
@@ -44,8 +47,8 @@ impl Builder {
         }
     }
 
-    fn method(&mut self, method: Method) -> &mut Builder {
-        self.method = method;
+    fn method(&mut self, m: Method) -> &mut Builder {
+        self.method = m;
         self
     }
 
@@ -64,11 +67,13 @@ impl Builder {
         self
     }
 
-    fn build(&self) -> Request {
-        let req = Request::new();
+    fn build(&self) -> Request<'a> {
+        // TODO set up request client
+        Request::new()
     }
 }
 
+#[derive(Copy)]
 pub enum Method {
     GET,
     POST,
@@ -77,7 +82,7 @@ pub enum Method {
 }
 
 impl Method {
-    fn to_str(&self) -> &str {
+    pub fn to_str(&self) -> &str {
         match *self {
             Method::GET => { "GET" },
             Method::POST => { "POST" },
@@ -87,7 +92,19 @@ impl Method {
     }
 }
 
+
 #[test]
 fn request_builder() {
+    let req = Builder::new()
+        .method(Method::PUT)
+        .body("HELLO")
+        .header("Content-Type", "application/json")
+        .build();
 
+    assert!(req.exec().is_err());
+}
+
+#[test]
+fn make_request_direct() {
+    let req = Request::new();
 }

@@ -3,8 +3,8 @@ use std::option::Option;
 
 use time::Timespec;
 
-use resources::Club;
-use resources::Gear;
+// use resources::Club;
+// use resources::Gear;
 use resources::enums::ResourceState;
 
 
@@ -45,23 +45,24 @@ pub struct Athlete {
     // bikes: Vec<Gear>
 }
 
-struct IOError;
+pub struct IOError;
 
 impl Athlete {
     fn new() -> Athlete { Default::default() }
 
-    fn get_current() -> Result<Athlete, IOError> {
+    pub fn get_current() -> Result<Athlete, IOError> {
         let url = "https://strava.com/api/v3/athlete";
+        println!("{}", url);
 
-        // temporary
+        // TODO make http request
         Ok(Athlete::new())
     }
 
-    fn get_by_id(id: i32) -> Result<Athlete, IOError> {
-        let url = "https://strava.com/api/v3/athletes/" +
-            id.to_string().as_ref();
+    pub fn get_by_id(id: i32) -> Result<Athlete, IOError> {
+        let url = format!("https://strava.com/api/v3/athletes/{}", id);
+        println!("{}", url);
 
-        // temporary
+        // TODO make http request
         Ok(Athlete::new())
     }
 }
