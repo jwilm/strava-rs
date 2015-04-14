@@ -51,8 +51,11 @@ impl Athlete {
     fn new() -> Athlete { Default::default() }
 
     pub fn get_current() -> Result<Athlete, IOError> {
-        let url = "https://strava.com/api/v3/athlete";
-        println!("{}", url);
+        // let res = Http::new()
+        //     .get("https://strava.com/api/v3/athlete")
+        //     .exec().unwrap();
+
+        // println!("{}", url);
 
         // TODO make http request
         Ok(Athlete::new())

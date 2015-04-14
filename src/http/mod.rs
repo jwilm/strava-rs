@@ -6,74 +6,96 @@ extern crate hyper;
 
 use std::option::Option;
 use std::collections::HashMap;
+use std::convert::From;
+use std::result::Result;
+use std::io::Read;
+
+struct Response {
+    body: Option<String>,
+}
 
 // TODO
-struct Response;
-
-// TODO
-enum HTTPError {
+#[derive(Debug)]
+pub enum HttpError {
     Failed
 }
 
-struct Request<'a> {
-    client: hyper::Client<hyper::net::HttpConnector<'a>>
-}
-
-impl<'a> Request<'a> {
-    pub fn new() -> Request<'a> {
-        Request { client: hyper::Client::new() }
-    }
-
-    pub fn exec(&self) -> Result<Response, HTTPError> {
-        // TODO
-        Err(HTTPError::Failed)
+impl From<hyper::HttpError> for HttpError {
+    fn from(e: hyper::HttpError) -> HttpError {
+        HttpError::Failed
     }
 }
 
-pub struct Builder {
-    method: Method,
-    url: Option<String>,
+pub struct Http {
     body: Option<String>,
     headers: HashMap<String, String>
 }
 
-impl<'a> Builder {
-    fn new() -> Builder {
-        Builder {
-            method: Method::GET,
-            url: None,
+impl<'a> Http {
+    pub fn new() -> Http {
+        Http {
             body: None,
             headers: HashMap::new()
         }
     }
 
-    fn method(&mut self, m: Method) -> &mut Builder {
-        self.method = m;
-        self
-    }
-
-    fn url(&mut self, url: &str) -> &mut Builder {
-        self.url = Some(url.to_string());
-        self
-    }
-
-    fn body(&mut self, body: &str) -> &mut Builder {
+    pub fn body(&mut self, body: &str) -> &mut Http {
         self.body = Some(body.to_string());
         self
     }
 
-    fn header(&mut self, header: &str, value: &str) -> &mut Builder {
+    pub fn header(&mut self, header: &str, value: &str) -> &mut Http {
         self.headers.insert(header.to_string(), value.to_string());
         self
     }
 
-    fn build(&self) -> Request<'a> {
-        // TODO set up request client
-        Request::new()
+    fn build(&self, method: Method, url: &str) -> Result<Response, HttpError> {
+        let mut client = hyper::Client::new();
+        let s = url.to_string();
+
+        let builder = match method {
+            Method::GET => client.get(s.as_ref()),
+            Method::PUT => client.put(s.as_ref()),
+            Method::POST => client.post(s.as_ref()),
+            Method::DELETE => client.delete(s.as_ref())
+        };
+
+        // TODO body
+        // TODO headers
+
+        let mut hyper_res = builder.send();
+
+        match hyper_res {
+            Err(e) => { Err(HttpError::from(e)) },
+            Ok(mut r) => {
+                let mut body = String::new();
+                r.read_to_string(&mut body).unwrap();
+
+                Ok(Response {
+                    body: Some(body)
+                })
+            }
+        }
+    }
+
+    pub fn get(&mut self, url: &str) -> Result<Response, HttpError> {
+        self.build(Method::GET, url)
+    }
+
+    pub fn put(&mut self, url: &str) -> Result<Response, HttpError> {
+        self.build(Method::PUT, url)
+    }
+
+    pub fn post(&mut self, url: &str) -> Result<Response, HttpError> {
+        self.build(Method::POST, url)
+    }
+
+    pub fn delete(&mut self, url: &str) -> Result<Response, HttpError> {
+        self.build(Method::DELETE, url)
     }
 }
 
-#[derive(Copy)]
+#[derive(Copy, Clone)]
 pub enum Method {
     GET,
     POST,
@@ -92,19 +114,9 @@ impl Method {
     }
 }
 
-
 #[test]
-fn request_builder() {
-    let req = Builder::new()
-        .method(Method::PUT)
-        .body("HELLO")
-        .header("Content-Type", "application/json")
-        .build();
-
-    assert!(req.exec().is_err());
-}
-
-#[test]
-fn make_request_direct() {
-    let req = Request::new();
+fn request_wrapper_can_fetch() {
+    let res = Http::new().get("http://www.google.com").unwrap();
+    let body = res.body.unwrap();
+    assert!(body.contains("doctype html"));
 }
