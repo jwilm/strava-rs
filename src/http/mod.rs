@@ -10,8 +10,19 @@ use std::convert::From;
 use std::result::Result;
 use std::io::Read;
 
+use std::fmt;
+
 struct Response {
     body: Option<String>,
+}
+
+use std::fmt::Display;
+
+impl fmt::Display for Response {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let s: &str = self.body.as_ref().unwrap().as_ref();
+        s.fmt(f)
+    }
 }
 
 // TODO
@@ -44,26 +55,26 @@ impl<'a> Http {
         self
     }
 
-    pub fn header(&mut self, header: &str, value: &str) -> &mut Http {
-        self.headers.insert(header.to_string(), value.to_string());
-        self
-    }
-
     fn build(&self, method: Method, url: &str) -> Result<Response, HttpError> {
         let mut client = hyper::Client::new();
         let s = url.to_string();
 
-        let builder = match method {
+        let mut builder = match method {
             Method::GET => client.get(s.as_ref()),
             Method::PUT => client.put(s.as_ref()),
             Method::POST => client.post(s.as_ref()),
             Method::DELETE => client.delete(s.as_ref())
         };
 
-        // TODO body
-        // TODO headers
+        // TODO is there a better way to do this?
+        builder = if self.body.is_some() {
+            let s: &str = (*(self.body.as_ref().unwrap())).as_ref();
+            builder.body(s)
+        } else {
+            builder
+        };
 
-        let mut hyper_res = builder.send();
+        let hyper_res = builder.send();
 
         match hyper_res {
             Err(e) => { Err(HttpError::from(e)) },
