@@ -7,6 +7,8 @@ use time::Timespec;
 // use resources::Gear;
 use resources::enums::ResourceState;
 
+use http::Http;
+use accesstoken::AccessToken;
 
 /// Athletes are Strava users, Strava users are athletes.
 ///
@@ -45,27 +47,47 @@ pub struct Athlete {
     // bikes: Vec<Gear>
 }
 
-pub struct IOError;
+#[derive(Debug, Copy, Clone)]
+pub enum ApiError {
+    InvalidAccessToken
+}
 
 impl Athlete {
     fn new() -> Athlete { Default::default() }
 
-    pub fn get_current() -> Result<Athlete, IOError> {
-        // let res = Http::new()
-        //     .get("https://strava.com/api/v3/athlete")
-        //     .exec().unwrap();
+    pub fn get_current(token: &AccessToken) -> Result<Athlete, ApiError> {
+        let url = format!("https://strava.com/api/v3/athlete?access_token={}", token.get());
+        println!("access token: {}", url);
+        let res = Http::new().get(url.as_ref()).unwrap();
 
-        // println!("{}", url);
+        println!("{}", res);
 
         // TODO make http request
         Ok(Athlete::new())
     }
 
-    pub fn get_by_id(id: i32) -> Result<Athlete, IOError> {
+    pub fn get_by_id(id: i32) -> Result<Athlete, ApiError> {
         let url = format!("https://strava.com/api/v3/athletes/{}", id);
         println!("{}", url);
 
         // TODO make http request
         Ok(Athlete::new())
+    }
+}
+
+
+#[cfg(test)]
+mod tests {
+    use accesstoken::AccessToken;
+    use resources::athlete::Athlete;
+    use std::result::Result;
+
+    #[test]
+    fn get_current_athlete() {
+        let token = AccessToken::from("fake_token");
+
+        let res = Athlete::get_current(&token);
+        assert!(!res.is_err());
+        assert!(res.is_err());
     }
 }
