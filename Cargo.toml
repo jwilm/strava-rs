@@ -7,5 +7,8 @@ authors = ["Joe Wilm <jdwilm@gmail.com>"]
 [dependencies.hyper]
 git = "https://github.com/hyperium/hyper.git"
 
+[dependencies.rustc-serialize]
+version = "0.3"
+
 [dependencies.time]
 version = "*"

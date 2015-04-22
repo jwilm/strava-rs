@@ -13,14 +13,20 @@ use std::io::Read;
 use std::fmt;
 
 struct Response {
-    body: Option<String>,
+    body: String
+}
+
+impl Response {
+    pub fn body(&self) -> &str {
+        self.body.as_ref()
+    }
 }
 
 use std::fmt::Display;
 
 impl fmt::Display for Response {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let s: &str = self.body.as_ref().unwrap().as_ref();
+        let s: &str = self.body.as_ref();
         s.fmt(f)
     }
 }
@@ -74,19 +80,13 @@ impl<'a> Http {
             builder
         };
 
-        let hyper_res = builder.send();
+        let mut response = try!(builder.send());
+        let mut body = String::new();
+        response.read_to_string(&mut body).unwrap();
 
-        match hyper_res {
-            Err(e) => { Err(HttpError::from(e)) },
-            Ok(mut r) => {
-                let mut body = String::new();
-                r.read_to_string(&mut body).unwrap();
-
-                Ok(Response {
-                    body: Some(body)
-                })
-            }
-        }
+        Ok(Response {
+            body: body
+        })
     }
 
     pub fn get(&mut self, url: &str) -> Result<Response, HttpError> {
@@ -128,6 +128,6 @@ impl Method {
 #[test]
 fn request_wrapper_can_fetch() {
     let res = Http::new().get("http://www.google.com").unwrap();
-    let body = res.body.unwrap();
+    let body = res.body;
     assert!(body.contains("doctype html"));
 }

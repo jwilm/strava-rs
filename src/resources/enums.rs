@@ -1,16 +1,34 @@
 use std::str::FromStr;
 use std::default::Default;
 
+use rustc_serialize::json::DecodeResult;
+use rustc_serialize::{Decodable, Decoder};
+
 /// Objects will be returned with a certain ResourceState
 ///
 /// Detailed contains the most data and Meta the least.
 #[allow(dead_code)]
-#[derive(Debug, FromPrimitive, PartialEq)]
+#[derive(Debug, PartialEq, RustcEncodable)]
 pub enum ResourceState {
     Unknown,
     Meta,
     Summary,
     Detailed
+}
+
+// TODO refactor primitive conversion into custom trait. Maybe add a macro or compiler plugin to
+// handle this.
+impl Decodable for ResourceState {
+    fn decode<D: Decoder>(d: &mut D) -> Result<Self, D::Error> {
+        let num = try!(d.read_u8());
+        Ok(match num {
+            0 => ResourceState::Unknown,
+            1 => ResourceState::Meta,
+            2 => ResourceState::Summary,
+            3 => ResourceState::Detailed,
+            _ =>  unreachable!("ResourceState only valid for 0,1,2,3")
+        })
+    }
 }
 
 impl Default for ResourceState {
@@ -72,6 +90,8 @@ pub enum ValueError {
     Other
 }
 
+// TODO this is really just for handling JSON conversion which can be done automatically with
+// rustc_serialize::Decodable
 impl FromStr for ActivityType {
     type Err = ValueError;
 
