@@ -7,15 +7,15 @@
 use time::Timespec;
 
 pub mod enums;
-use resources::enums::ResourceState;
-use resources::enums::FrameType;
-use resources::enums::ActivityType;
-use resources::enums::ClubType;
-use resources::enums::SportType;
-use resources::enums::WorkoutType;
+pub use self::enums::ResourceState;
+use self::enums::FrameType;
+use self::enums::ActivityType;
+use self::enums::ClubType;
+use self::enums::SportType;
+use self::enums::WorkoutType;
 
 pub mod athlete;
-use self::athlete::Athlete;
+pub use self::athlete::Athlete;
 
 /// Gear type able to represent bikes/shoes/etc.
 ///
