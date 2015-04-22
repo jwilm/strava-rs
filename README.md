@@ -6,11 +6,20 @@ Strava API client written in rust
 ## About
 
 This library is highly incomplete. At this point in time, you are able to fetch
-the athlete associated with an auth token. See the [athlete
-tests](https://github.com/jwilm/strava-rs/blob/master/src/resources/athlete.rs#L101-L105)
-for guidance.
+the athlete associated with an auth token. Docs will be arriving soon.
 
-Now that APIs are starting to come together, docs will be coming soon.
+```rust
+extern crate strava;
+
+use strava::AccessToken;
+use strava::Athlete;
+
+fn main() {
+    let token = AccessToken::from("<replace me>");
+    let athlete = Athlete::get_current(&token).unwrap();
+    println!("{:?}", athlete);
+}
+```
 
 ## Disclaimer
 
