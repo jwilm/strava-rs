@@ -4,7 +4,7 @@
 //! times
 //!
 
-use time::Timespec;
+// use time::Timespec;
 
 pub mod enums;
 pub use self::enums::ResourceState;
@@ -82,8 +82,8 @@ pub struct Activity {
     elapsed_time: i32,
     total_elevation_gain: f32,
     activity_type: ActivityType,
-    start_date: Timespec,
-    start_date_local: Timespec,
+    // start_date: Timespec,
+    // start_date_local: Timespec,
     timezone: String,
     start_latlng: (f32, f32),
     end_latlng: (f32, f32),
