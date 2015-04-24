@@ -37,7 +37,7 @@ impl Default for ResourceState {
 
 /// Frame type for bikes
 #[allow(dead_code)]
-#[derive(Debug, FromPrimitive)]
+#[derive(Debug)]
 pub enum FrameType {
     MTB,
     Cross,
@@ -132,7 +132,7 @@ impl FromStr for ActivityType {
 
 /// Types of clubs
 #[allow(dead_code)]
-#[derive(Debug, FromPrimitive)]
+#[derive(Debug)]
 pub enum ClubType {
     Casual,
     Racing,
@@ -142,7 +142,7 @@ pub enum ClubType {
 
 /// Types of sports
 #[allow(dead_code)]
-#[derive(Debug, FromPrimitive)]
+#[derive(Debug)]
 pub enum SportType {
     Cycling,
     Running,
@@ -151,7 +151,7 @@ pub enum SportType {
 }
 
 #[allow(dead_code)]
-#[derive(Debug, FromPrimitive)]
+#[derive(Debug)]
 pub enum WorkoutType {
     Default,
     Race,

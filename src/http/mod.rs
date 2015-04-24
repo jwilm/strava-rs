@@ -63,13 +63,12 @@ impl<'a> Http {
 
     fn build(&self, method: Method, url: &str) -> Result<Response, HttpError> {
         let mut client = hyper::Client::new();
-        let s = url.to_string();
 
         let mut builder = match method {
-            Method::GET => client.get(s.as_ref()),
-            Method::PUT => client.put(s.as_ref()),
-            Method::POST => client.post(s.as_ref()),
-            Method::DELETE => client.delete(s.as_ref())
+            Method::GET => client.get(url),
+            Method::PUT => client.put(url),
+            Method::POST => client.post(url),
+            Method::DELETE => client.delete(url)
         };
 
         // TODO is there a better way to do this?
