@@ -10,7 +10,7 @@ keywords = ["strava", "client", "api"]
 license = "MPL-2.0"
 
 [dependencies.hyper]
-version = "*"
+version = "~0.5"
 
 [dependencies.rustc-serialize]
-version = "0.3"
+version = "~0.3"

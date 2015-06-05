@@ -37,8 +37,8 @@ pub enum HttpError {
     Failed
 }
 
-impl From<hyper::HttpError> for HttpError {
-    fn from(e: hyper::HttpError) -> HttpError {
+impl From<hyper::error::Error> for HttpError {
+    fn from(e: hyper::error::Error) -> HttpError {
         HttpError::Failed
     }
 }
