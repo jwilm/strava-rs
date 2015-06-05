@@ -124,9 +124,12 @@ impl Method {
     }
 }
 
-#[test]
-fn request_wrapper_can_fetch() {
-    let res = Http::new().get("http://www.google.com").unwrap();
-    let body = res.body;
-    assert!(body.contains("doctype html"));
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn request_wrapper_can_fetch() {
+        let res = Http::new().get("http://www.google.com").unwrap();
+        let body = res.body;
+        assert!(body.contains("doctype html"));
+    }
 }

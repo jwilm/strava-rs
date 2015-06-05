@@ -88,8 +88,8 @@ impl Athlete {
     }
 }
 
-#[cfg(test)]
-mod tests {
+#[cfg(api_test)]
+mod api_tests {
     use accesstoken::AccessToken;
     use resources::athlete::Athlete;
     use std::result::Result;
@@ -97,7 +97,7 @@ mod tests {
 
     #[test]
     fn get_current_athlete() {
-        let token = AccessToken::from("<fake token replace me>");
+        let token = AccessToken::new_from_env().unwrap();
         let athlete: Athlete = Athlete::get_current(&token).unwrap();
         assert!(athlete.resource_state == ResourceState::Detailed);
     }

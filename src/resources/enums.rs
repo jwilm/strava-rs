@@ -159,21 +159,24 @@ pub enum WorkoutType {
     Intervals
 }
 
-#[test]
-fn activity_type_to_string() {
-    assert_eq!("Ride", ActivityType::Ride.string());
-    assert_eq!("Snowboard", ActivityType::Snowboard.string());
-}
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn activity_type_to_string() {
+        assert_eq!("Ride", ActivityType::Ride.string());
+        assert_eq!("Snowboard", ActivityType::Snowboard.string());
+    }
 
-#[test]
-fn resource_state_values() {
-    assert_eq!(ResourceState::Meta as i32, 1);
-    assert_eq!(ResourceState::Summary as i32, 2);
-    assert_eq!(ResourceState::Detailed as i32, 3);
-}
+    #[test]
+    fn resource_state_values() {
+        assert_eq!(ResourceState::Meta as i32, 1);
+        assert_eq!(ResourceState::Summary as i32, 2);
+        assert_eq!(ResourceState::Detailed as i32, 3);
+    }
 
-#[test]
-fn default_resource_state() {
-    let default_state: ResourceState = Default::default();
-    assert_eq!(default_state, ResourceState::Unknown);
+    #[test]
+    fn default_resource_state() {
+        let default_state: ResourceState = Default::default();
+        assert_eq!(default_state, ResourceState::Unknown);
+    }
 }

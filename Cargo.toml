@@ -9,6 +9,12 @@ readme = "README.md"
 keywords = ["strava", "client", "api"]
 license = "MPL-2.0"
 
+[features]
+# The api_test feature is for running tests against the strava API. It requires
+# the STRAVA_ACCESS_TOKEN environment variable to be set or else all of the
+# tests will fail.
+api_test = []
+
 [dependencies.hyper]
 version = "~0.5"
 
