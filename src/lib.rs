@@ -10,6 +10,8 @@ mod http;
 pub mod resources;
 pub mod accesstoken;
 pub mod error;
+pub mod segment;
+pub mod paginate;
 
 pub use resources::Athlete;
 pub use accesstoken::AccessToken;
