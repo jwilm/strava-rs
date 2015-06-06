@@ -7,7 +7,7 @@ use resources::enums::ResourceState;
 use http;
 use accesstoken::AccessToken;
 
-use error::ApiError;
+use error::Result;
 
 /// Athletes are Strava users, Strava users are athletes.
 ///
@@ -85,17 +85,17 @@ pub struct Totals {
 
 
 impl Athlete {
-    pub fn get_current(token: &AccessToken) -> Result<Athlete, ApiError> {
+    pub fn get_current(token: &AccessToken) -> Result<Athlete> {
         let url = format!("https://strava.com/api/v3/athlete?access_token={}", token.get());
         http::get::<Athlete>(&url[..])
     }
 
-    pub fn get(token: &AccessToken, id: i32) -> Result<Athlete, ApiError> {
+    pub fn get(token: &AccessToken, id: i32) -> Result<Athlete> {
         let url = format!("https://strava.com/api/v3/athletes/{}?access_token={}", id, token.get());
         http::get::<Athlete>(&url[..])
     }
 
-    pub fn stats(&self, token: &AccessToken) -> Result<Stats, ApiError> {
+    pub fn stats(&self, token: &AccessToken) -> Result<Stats> {
         let url = format!("https://strava.com/api/v3/athletes/{}/stats?access_token={}",
                           self.id, token.get());
         http::get::<Stats>(&url[..])

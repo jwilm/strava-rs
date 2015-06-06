@@ -16,6 +16,8 @@ pub enum ApiError {
     InvalidJson(DecoderError)
 }
 
+pub type Result<T> = ::std::result::Result<T, ApiError>;
+
 impl Error for ApiError {
     fn cause(&self) -> Option<&Error> {
         match *self {
