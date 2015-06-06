@@ -8,6 +8,7 @@ use http;
 use accesstoken::AccessToken;
 
 use error::Result;
+use api;
 
 /// Athletes are Strava users, Strava users are athletes.
 ///
@@ -86,18 +87,17 @@ pub struct Totals {
 
 impl Athlete {
     pub fn get_current(token: &AccessToken) -> Result<Athlete> {
-        let url = format!("https://strava.com/api/v3/athlete?access_token={}", token.get());
+        let url = api::v3(token, "athlete".to_string());
         http::get::<Athlete>(&url[..])
     }
 
     pub fn get(token: &AccessToken, id: i32) -> Result<Athlete> {
-        let url = format!("https://strava.com/api/v3/athletes/{}?access_token={}", id, token.get());
+        let url = api::v3(token, format!("athletes/{}", id));
         http::get::<Athlete>(&url[..])
     }
 
     pub fn stats(&self, token: &AccessToken) -> Result<Stats> {
-        let url = format!("https://strava.com/api/v3/athletes/{}/stats?access_token={}",
-                          self.id, token.get());
+        let url = api::v3(token, format!("athletes/{}/stats", self.id));
         http::get::<Stats>(&url[..])
     }
 }

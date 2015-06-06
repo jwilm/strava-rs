@@ -12,6 +12,7 @@ pub mod accesstoken;
 pub mod error;
 pub mod segment;
 pub mod paginate;
+pub mod api;
 
 pub use resources::Athlete;
 pub use accesstoken::AccessToken;
