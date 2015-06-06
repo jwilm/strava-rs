@@ -53,8 +53,8 @@ impl Athlete {
         http::get::<Athlete>(&url[..])
     }
 
-    pub fn get_by_id(id: i32) -> Result<Athlete, ApiError> {
-        let url = format!("https://strava.com/api/v3/athletes/{}", id);
+    pub fn get(token: &AccessToken, id: i32) -> Result<Athlete, ApiError> {
+        let url = format!("https://strava.com/api/v3/athletes/{}?access_token={}", id, token.get());
         http::get::<Athlete>(&url[..])
     }
 }
@@ -70,6 +70,15 @@ mod api_tests {
     fn get_current_athlete() {
         let token = AccessToken::new_from_env().unwrap();
         let athlete: Athlete = Athlete::get_current(&token).unwrap();
-        assert!(athlete.resource_state == ResourceState::Detailed);
+        assert_eq!(athlete.resource_state, ResourceState::Detailed);
+    }
+
+    #[test]
+    fn get_athlete_by_id() {
+        let id = 1712082;
+        let token = AccessToken::new_from_env().unwrap();
+        let athlete = Athlete::get(&token, id).unwrap();
+        println!("{:?}", athlete);
+        assert_eq!(athlete.id, id);
     }
 }
