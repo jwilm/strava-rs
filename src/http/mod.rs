@@ -12,16 +12,22 @@ use std::result::Result;
 use rustc_serialize::Decodable;
 use rustc_serialize::json;
 
+use hyper::status::StatusCode;
 
 use error::ApiError;
 
 pub struct Response {
-    body: String
+    body: String,
+    res: hyper::client::Response
 }
 
 impl Response {
     pub fn body(&self) -> &str {
         self.body.as_ref()
+    }
+
+    pub fn status(&self) -> hyper::status::StatusCode {
+        self.res.status
     }
 }
 
@@ -72,10 +78,12 @@ impl<'a> Http {
 
         let mut response = try!(builder.send());
         let mut body = String::new();
+        println!("{:?}", response);
         response.read_to_string(&mut body).unwrap();
 
         Ok(Response {
-            body: body
+            body: body,
+            res: response
         })
     }
 
@@ -101,7 +109,10 @@ impl<'a> Http {
 
 pub fn get<T>(url: &str) -> Result<T, ApiError> where T: Decodable {
     let response = try!(Http::get(url));
-    Ok(try!(json::decode::<T>(response.body())))
+    match response.status() {
+        StatusCode::Unauthorized => Err(ApiError::InvalidAccessToken),
+        _ => Ok(try!(json::decode::<T>(response.body())))
+    }
 }
 
 #[derive(Copy, Clone, Debug)]

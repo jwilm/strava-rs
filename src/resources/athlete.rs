@@ -108,6 +108,7 @@ mod api_tests {
     use accesstoken::AccessToken;
     use super::Athlete;
     use resources::enums::ResourceState;
+    use error::ApiError;
 
     #[test]
     fn get_current_athlete() {
@@ -133,5 +134,17 @@ mod api_tests {
         let stats = athlete.stats(&token).unwrap();
 
         println!("{:?}", stats);
+    }
+
+    #[test]
+    fn get_other_athlete_stats() {
+        let id = 1712082;
+        let token = AccessToken::new_from_env().unwrap();
+        let athlete = Athlete::get(&token, id).unwrap();
+        match athlete.stats(&token) {
+            Ok(_) => panic!("somehow got stats for other athlete"),
+            Err(ApiError::InvalidAccessToken) => (),
+            Err(e) => panic!("unexpected error type {:?}", e)
+        }
     }
 }
