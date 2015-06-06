@@ -1,4 +1,3 @@
-use std::str::FromStr;
 use std::default::Default;
 
 use rustc_serialize::{Decodable, Decoder};
@@ -75,52 +74,51 @@ pub enum ActivityType {
     WeightTraining,
     Windsurf,
     Workout,
-    Yoga
+    Yoga,
+    Unknown
+}
+
+impl Decodable for ActivityType {
+    fn decode<D: Decoder>(d: &mut D) -> Result<ActivityType, D::Error> {
+        d.read_str().map(|s| {
+            match &s[..] {
+                "Ride" => { ActivityType::Ride },
+                "Run" => { ActivityType::Run },
+                "Swim" => { ActivityType::Swim },
+                "Hike" => { ActivityType::Hike },
+                "Walk" => { ActivityType::Walk },
+                "AlpineSki" => { ActivityType::AlpineSki },
+                "BackcountrySki" => { ActivityType::BackcountrySki },
+                "Canoeing" => { ActivityType::Canoeing },
+                "CrossCountrySkiing" => { ActivityType::CrossCountrySkiing },
+                "Crossfit" => { ActivityType::Crossfit },
+                "Elliptical" => { ActivityType::Elliptical },
+                "IceSkate" => { ActivityType::IceSkate },
+                "InlineSkate" => { ActivityType::InlineSkate },
+                "Kayaking" => { ActivityType::Kayaking },
+                "Kitesurf" => { ActivityType::Kitesurf },
+                "NordicSki" => { ActivityType::NordicSki },
+                "RockClimbing" => { ActivityType::RockClimbing },
+                "RollerSki" => { ActivityType::RollerSki },
+                "Rowing" => { ActivityType::Rowing },
+                "Snowboard" => { ActivityType::Snowboard },
+                "Snowshoe" => { ActivityType::Snowshoe },
+                "StairStepper" => { ActivityType::StairStepper },
+                "StandUpPaddling" => { ActivityType::StandUpPaddling },
+                "Surfing" => { ActivityType::Surfing },
+                "WeightTraining" => { ActivityType::WeightTraining },
+                "Windsurf" => { ActivityType::Windsurf },
+                "Workout" => { ActivityType::Workout },
+                "Yoga" => { ActivityType::Yoga }
+                _ => { ActivityType::Unknown }
+            }
+        })
+    }
 }
 
 pub enum ValueError {
     InvalidValue,
     Other
-}
-
-// TODO this is really just for handling JSON conversion which can be done automatically with
-// rustc_serialize::Decodable
-impl FromStr for ActivityType {
-    type Err = ValueError;
-
-    fn from_str(s: &str) -> Result<ActivityType, ValueError> {
-        match s {
-            "Ride" => { Ok(ActivityType::Ride) },
-            "Run" => { Ok(ActivityType::Run) },
-            "Swim" => { Ok(ActivityType::Swim) },
-            "Hike" => { Ok(ActivityType::Hike) },
-            "Walk" => { Ok(ActivityType::Walk) },
-            "AlpineSki" => { Ok(ActivityType::AlpineSki) },
-            "BackcountrySki" => { Ok(ActivityType::BackcountrySki) },
-            "Canoeing" => { Ok(ActivityType::Canoeing) },
-            "CrossCountrySkiing" => { Ok(ActivityType::CrossCountrySkiing) },
-            "Crossfit" => { Ok(ActivityType::Crossfit) },
-            "Elliptical" => { Ok(ActivityType::Elliptical) },
-            "IceSkate" => { Ok(ActivityType::IceSkate) },
-            "InlineSkate" => { Ok(ActivityType::InlineSkate) },
-            "Kayaking" => { Ok(ActivityType::Kayaking) },
-            "Kitesurf" => { Ok(ActivityType::Kitesurf) },
-            "NordicSki" => { Ok(ActivityType::NordicSki) },
-            "RockClimbing" => { Ok(ActivityType::RockClimbing) },
-            "RollerSki" => { Ok(ActivityType::RollerSki) },
-            "Rowing" => { Ok(ActivityType::Rowing) },
-            "Snowboard" => { Ok(ActivityType::Snowboard) },
-            "Snowshoe" => { Ok(ActivityType::Snowshoe) },
-            "StairStepper" => { Ok(ActivityType::StairStepper) },
-            "StandUpPaddling" => { Ok(ActivityType::StandUpPaddling) },
-            "Surfing" => { Ok(ActivityType::Surfing) },
-            "WeightTraining" => { Ok(ActivityType::WeightTraining) },
-            "Windsurf" => { Ok(ActivityType::Windsurf) },
-            "Workout" => { Ok(ActivityType::Workout) },
-            "Yoga" => { Ok(ActivityType::Yoga) }
-            _ => { Err(ValueError::InvalidValue) }
-        }
-    }
 }
 
 /// Types of clubs
