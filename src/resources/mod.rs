@@ -12,7 +12,7 @@ use self::enums::FrameType;
 use self::enums::ActivityType;
 use self::enums::ClubType;
 use self::enums::SportType;
-use self::enums::WorkoutType;
+// use self::enums::WorkoutType;
 
 pub mod athlete;
 pub use self::athlete::Athlete;

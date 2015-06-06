@@ -4,15 +4,18 @@
 ///
 extern crate hyper;
 
-use std::option::Option;
-use std::collections::HashMap;
-use std::convert::From;
-use std::result::Result;
-use std::io::Read;
-
 use std::fmt;
+use std::io::Read;
+use std::option::Option;
+use std::result::Result;
 
-struct Response {
+use rustc_serialize::Decodable;
+use rustc_serialize::json;
+
+
+use error::ApiError;
+
+pub struct Response {
     body: String
 }
 
@@ -31,37 +34,26 @@ impl fmt::Display for Response {
     }
 }
 
-// TODO
-#[derive(Debug)]
-pub enum HttpError {
-    Failed
-}
-
-impl From<hyper::error::Error> for HttpError {
-    fn from(e: hyper::error::Error) -> HttpError {
-        HttpError::Failed
-    }
-}
+pub type Error = hyper::error::Error;
 
 pub struct Http {
-    body: Option<String>,
-    headers: HashMap<String, String>
+    body: Option<String>
 }
 
 impl<'a> Http {
     pub fn new() -> Http {
         Http {
-            body: None,
-            headers: HashMap::new()
+            body: None
         }
     }
 
+    #[allow(dead_code)]
     pub fn body(&mut self, body: &str) -> &mut Http {
         self.body = Some(body.to_string());
         self
     }
 
-    fn build(&self, method: Method, url: &str) -> Result<Response, HttpError> {
+    fn build(&self, method: Method, url: &str) -> Result<Response, Error> {
         let mut client = hyper::Client::new();
 
         let mut builder = match method {
@@ -72,9 +64,8 @@ impl<'a> Http {
         };
 
         // TODO is there a better way to do this?
-        builder = if self.body.is_some() {
-            let s: &str = (*(self.body.as_ref().unwrap())).as_ref();
-            builder.body(s)
+        builder = if let Some(ref body) = self.body {
+            builder.body(body)
         } else {
             builder
         };
@@ -88,24 +79,32 @@ impl<'a> Http {
         })
     }
 
-    pub fn get(&mut self, url: &str) -> Result<Response, HttpError> {
-        self.build(Method::GET, url)
+    pub fn get(url: &str) -> Result<Response, Error> {
+        Http::new().build(Method::GET, url)
     }
 
-    pub fn put(&mut self, url: &str) -> Result<Response, HttpError> {
-        self.build(Method::PUT, url)
+    #[allow(dead_code)]
+    pub fn put(url: &str) -> Result<Response, Error> {
+        Http::new().build(Method::PUT, url)
     }
 
-    pub fn post(&mut self, url: &str) -> Result<Response, HttpError> {
-        self.build(Method::POST, url)
+    #[allow(dead_code)]
+    pub fn post(url: &str) -> Result<Response, Error> {
+        Http::new().build(Method::POST, url)
     }
 
-    pub fn delete(&mut self, url: &str) -> Result<Response, HttpError> {
-        self.build(Method::DELETE, url)
+    #[allow(dead_code)]
+    pub fn delete(url: &str) -> Result<Response, Error> {
+        Http::new().build(Method::DELETE, url)
     }
 }
 
-#[derive(Copy, Clone)]
+pub fn get<T>(url: &str) -> Result<T, ApiError> where T: Decodable {
+    let response = try!(Http::get(url));
+    Ok(try!(json::decode::<T>(response.body())))
+}
+
+#[derive(Copy, Clone, Debug)]
 pub enum Method {
     GET,
     POST,
@@ -113,22 +112,13 @@ pub enum Method {
     DELETE
 }
 
-impl Method {
-    pub fn to_str(&self) -> &str {
-        match *self {
-            Method::GET => { "GET" },
-            Method::POST => { "POST" },
-            Method::PUT => { "PUT" },
-            Method::DELETE => { "DELETE" }
-        }
-    }
-}
-
 #[cfg(test)]
 mod tests {
+    use super::Http;
+
     #[test]
     fn request_wrapper_can_fetch() {
-        let res = Http::new().get("http://www.google.com").unwrap();
+        let res = Http::get("http://www.google.com").unwrap();
         let body = res.body;
         assert!(body.contains("doctype html"));
     }

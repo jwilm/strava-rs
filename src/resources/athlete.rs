@@ -1,15 +1,13 @@
-use std::default::Default;
 use std::option::Option;
 
 // use resources::Club;
 // use resources::Gear;
 use resources::enums::ResourceState;
 
-use rustc_serialize::json;
-use rustc_serialize::json::DecoderError;
-
-use http::{Http, HttpError};
+use http;
 use accesstoken::AccessToken;
+
+use error::ApiError;
 
 /// Athletes are Strava users, Strava users are athletes.
 ///
@@ -17,82 +15,55 @@ use accesstoken::AccessToken;
 ///
 /// See: http://strava.github.io/api/v3/athlete/
 #[allow(dead_code)]
-#[derive(Default, RustcEncodable, RustcDecodable, Debug)]
+#[derive(RustcDecodable, Debug)]
 pub struct Athlete {
-    id: Option<i32>,
-    resource_state: ResourceState,
-    firstname: Option<String>,
-    lastname: Option<String>,
-    profile_medium: Option<String>,
-    profile: Option<String>,
-    city: Option<String>,
-    state: Option<String>,
-    country: Option<String>,
-    sex: Option<String>,
-    friend: Option<String>,
-    follower: Option<String>,
-    premium: Option<bool>,
-    created_at: Option<String>,
-    updated_at: Option<String>,
-    approve_followers: Option<bool>,
-    follower_count: Option<i32>,
-    friend_count: Option<i32>,
-    mutual_friend_count: Option<i32>,
-    date_preference: Option<String>,
-    measurement_preference: Option<String>,
-    email: Option<String>,
-    ftp: Option<i32>,
-    weight: Option<f32>
-    // clubs: Vec<Club>,
-    // shoes: Vec<Gear>,
-    // bikes: Vec<Gear>
+    pub id: i32,
+    pub resource_state: ResourceState,
+    pub firstname: Option<String>,
+    pub lastname: Option<String>,
+    pub profile_medium: Option<String>,
+    pub profile: Option<String>,
+    pub city: Option<String>,
+    pub state: Option<String>,
+    pub country: Option<String>,
+    pub sex: Option<String>,
+    pub friend: Option<String>,
+    pub follower: Option<String>,
+    pub premium: Option<bool>,
+    pub created_at: Option<String>,
+    pub updated_at: Option<String>,
+    pub approve_followers: Option<bool>,
+    pub follower_count: Option<i32>,
+    pub friend_count: Option<i32>,
+    pub mutual_friend_count: Option<i32>,
+    pub date_preference: Option<String>,
+    pub measurement_preference: Option<String>,
+    pub email: Option<String>,
+    pub ftp: Option<i32>,
+    pub weight: Option<f32>
+    // pub clubs: Vec<Club>,
+    // pub shoes: Vec<Gear>,
+    // pub bikes: Vec<Gear>
 }
 
-#[derive(Debug)]
-pub enum ApiError {
-    InvalidAccessToken,
-    EmptyResponse,
-    NetworkError,
-    InvalidJson(DecoderError)
-}
-
-impl From<DecoderError> for ApiError {
-    fn from(e: DecoderError) -> ApiError {
-        ApiError::InvalidJson(e)
-    }
-}
-
-impl From<HttpError> for ApiError {
-    fn from(e: HttpError) -> ApiError {
-        ApiError::NetworkError
-    }
-}
 
 impl Athlete {
-    fn new() -> Athlete { Default::default() }
-
     pub fn get_current(token: &AccessToken) -> Result<Athlete, ApiError> {
         let url = format!("https://strava.com/api/v3/athlete?access_token={}", token.get());
-
-        let response = try!(Http::new().get(url.as_ref()));
-        let athlete = try!(json::decode::<Athlete>(response.body()));
-        Ok(athlete)
+        http::get::<Athlete>(&url[..])
     }
 
     pub fn get_by_id(id: i32) -> Result<Athlete, ApiError> {
         let url = format!("https://strava.com/api/v3/athletes/{}", id);
-        println!("{}", url);
-
-        // TODO make http request
-        Ok(Athlete::new())
+        http::get::<Athlete>(&url[..])
     }
 }
 
-#[cfg(api_test)]
+#[cfg(feature = "api_test")]
+#[cfg(test)]
 mod api_tests {
     use accesstoken::AccessToken;
-    use resources::athlete::Athlete;
-    use std::result::Result;
+    use super::Athlete;
     use resources::enums::ResourceState;
 
     #[test]

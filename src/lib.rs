@@ -9,6 +9,7 @@ mod http;
 
 pub mod resources;
 pub mod accesstoken;
+pub mod error;
 
 pub use resources::Athlete;
 pub use accesstoken::AccessToken;

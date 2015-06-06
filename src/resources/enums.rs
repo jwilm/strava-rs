@@ -1,7 +1,6 @@
 use std::str::FromStr;
 use std::default::Default;
 
-use rustc_serialize::json::DecodeResult;
 use rustc_serialize::{Decodable, Decoder};
 
 /// Objects will be returned with a certain ResourceState
@@ -77,12 +76,6 @@ pub enum ActivityType {
     Windsurf,
     Workout,
     Yoga
-}
-
-impl ActivityType {
-    fn string(&self) -> String {
-        format!("{:?}", &self)
-    }
 }
 
 pub enum ValueError {
@@ -161,11 +154,9 @@ pub enum WorkoutType {
 
 #[cfg(test)]
 mod tests {
-    #[test]
-    fn activity_type_to_string() {
-        assert_eq!("Ride", ActivityType::Ride.string());
-        assert_eq!("Snowboard", ActivityType::Snowboard.string());
-    }
+    use std::default::Default;
+
+    use super::ResourceState;
 
     #[test]
     fn resource_state_values() {
