@@ -9,6 +9,8 @@ use accesstoken::AccessToken;
 
 use error::Result;
 use api;
+use segment;
+use paginate::Paginated;
 
 /// Athletes are Strava users, Strava users are athletes.
 ///
@@ -84,7 +86,6 @@ pub struct Totals {
 }
 
 
-
 impl Athlete {
     pub fn get_current(token: &AccessToken) -> Result<Athlete> {
         let url = api::v3(token, "athlete".to_string());
@@ -99,6 +100,12 @@ impl Athlete {
     pub fn stats(&self, token: &AccessToken) -> Result<Stats> {
         let url = api::v3(token, format!("athletes/{}/stats", self.id));
         http::get::<Stats>(&url[..])
+    }
+
+    pub fn koms(&self, token: &AccessToken) -> Result<Paginated<segment::Effort>> {
+        let url = api::v3(token, format!("athletes/{}/koms", self.id));
+        let efforts = try!(http::get::<Vec<segment::Effort>>(&url[..]));
+        Ok(Paginated::new(url, efforts))
     }
 }
 
@@ -146,5 +153,13 @@ mod api_tests {
             Err(ApiError::InvalidAccessToken) => (),
             Err(e) => panic!("unexpected error type {:?}", e)
         }
+    }
+
+    #[test]
+    fn get_koms() {
+        let token = AccessToken::new_from_env().unwrap();
+        let athlete = Athlete::get_current(&token).unwrap();
+        let koms = athlete.koms(&token).unwrap();
+        println!("{:?}", koms);
     }
 }
