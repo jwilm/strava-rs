@@ -3,10 +3,10 @@ use std::option::Option;
 
 use rustc_serialize::{Decoder};
 
-use error::Result;
 
-use http;
 use api::{self, Paginated, AccessToken, ResourceState};
+use error::Result;
+use http;
 use segmentefforts::SegmentEffort;
 
 /// A strava athlete

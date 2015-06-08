@@ -9,8 +9,8 @@ use std::io::Read;
 use std::option::Option;
 use std::result::Result;
 
-use rustc_serialize::Decodable;
 use rustc_serialize::json;
+use rustc_serialize::Decodable;
 
 use hyper::status::StatusCode;
 

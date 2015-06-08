@@ -1,9 +1,9 @@
 use rustc_serialize::{Decodable, Decoder};
 
-use resources::Map;
-use athletes::Athlete;
 use api::ResourceState;
+use athletes::Athlete;
 use segmentefforts::SegmentEffort;
+use resources::Map;
 
 /// Activity Types
 #[derive(Debug)]
