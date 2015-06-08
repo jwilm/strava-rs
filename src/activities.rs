@@ -1,6 +1,6 @@
 use rustc_serialize::{Decodable, Decoder};
 
-use map::Map;
+use resources::Map;
 use athletes::Athlete;
 use api::ResourceState;
 use segmentefforts::SegmentEffort;

@@ -16,11 +16,12 @@ extern crate rustc_serialize;
 #[doc(hidden)]
 mod http;
 
+// Support modules
 pub mod api;
 pub mod error;
+pub mod resources;
 
-mod map;
-
+// Modules corresponding to strava docs
 pub mod activities;
 pub mod athletes;
 pub mod clubs;
