@@ -6,10 +6,8 @@ use error::Result;
 
 use http;
 use accesstoken::AccessToken;
-
-use api;
+use api::{self, Paginated};
 use segment;
-use paginate::Paginated;
 use ResourceState;
 
 /// Athletes are Strava users, Strava users are athletes.

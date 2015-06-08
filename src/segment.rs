@@ -1,10 +1,9 @@
 use accesstoken::AccessToken;
 use activity::ActivityType;
 use athlete::Athlete;
-use api;
+use api::{self, Paginated};
 use error::Result;
 use http;
-use paginate::Paginated;
 use ResourceState;
 
 /// A specific section(s) of road.

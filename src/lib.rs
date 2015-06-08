@@ -9,10 +9,9 @@ use std::default::Default;
 use rustc_serialize::{Decodable, Decoder};
 
 pub mod error;
-pub mod segment;
 pub mod paginate;
 
-mod api;
+pub mod api;
 mod http;
 mod map;
 mod split;
@@ -27,6 +26,9 @@ mod activity;
 pub use activity::Activity;
 pub use activity::ActivityType;
 
+mod segment;
+pub use segment::Segment;
+pub use segment::Effort as SegmentEffort;
 
 /// Objects will be returned with a certain ResourceState
 ///
