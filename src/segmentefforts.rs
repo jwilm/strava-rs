@@ -1,3 +1,4 @@
+//! Athlete attempts at a segment
 use api::{self, Paginated, AccessToken, ResourceState};
 use athletes::Athlete;
 use error::Result;

@@ -1,22 +1,28 @@
 strava-rs
 =========
 
-Strava API client written in rust
+Strava API client in Rust
 
 ## About
 
-This library is highly incomplete. At this point in time, you are able to fetch
-the athlete associated with an auth token. Docs will be arriving soon.
+The library currently exposes functions for accessing athletes, segments, and
+segment efforts. Support for activities is next on the list. For an exhaustive
+list of capabilities, please reference the [docs][].
 
 ```rust
 extern crate strava;
 
-use strava::AccessToken;
-use strava::Athlete;
+use strava::athletes::Athlete;
+use strava::api::AccessToken;
 
 fn main() {
-    let token = AccessToken::from("<replace me>");
+    // Create a token
+    let token = AccessToken::new("<my token>");
+
+    // Get the athlete associated with the given token
     let athlete = Athlete::get_current(&token).unwrap();
+
+    // All of the strava types implement Debug and can be printed like so:
     println!("{:?}", athlete);
 }
 ```
@@ -25,3 +31,5 @@ fn main() {
 
 I am not in any way affiliated with Strava, Inc. I merely wish to use the Strava
 API from Rust.
+
+[docs]: http://www.jwilm.io/strava-rs/strava/

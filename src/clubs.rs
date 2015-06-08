@@ -1,3 +1,4 @@
+//! **UNIMPLEMENTED:** Groups of athletes on Strava
 use api::ResourceState;
 
 /// Clubs represent groups of athletes on Strava.

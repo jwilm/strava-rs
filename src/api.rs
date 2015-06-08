@@ -1,4 +1,4 @@
-//! Helpers for the strava api
+//! Shared utility types and functions for the API
 use std::env;
 use std::convert::From;
 
@@ -32,6 +32,8 @@ impl<T> Paginated<T> {
     }
 
     /// Get the next page of results
+    ///
+    /// **UNIMPLEMENTED**
     pub fn fetch_next_page(&self) -> Option<Paginated<T>> {
         unimplemented!();
     }
@@ -42,7 +44,8 @@ impl<T> Paginated<T> {
     }
 }
 
-/// Objects will be returned with a certain ResourceState
+
+/// The level of detail for the current resource
 ///
 /// Detailed contains the most data and Meta the least.
 #[allow(dead_code)]

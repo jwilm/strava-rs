@@ -1,9 +1,13 @@
+//! **UNIMPLEMENTED:** Base object for Strava runs, rides, swims etc.
+//!
+//! Although there are a couple of types defined here, no endpoints are currently accessible with
+//! this library.
 use rustc_serialize::{Decodable, Decoder};
 
 use api::ResourceState;
 use athletes::Athlete;
 use segmentefforts::SegmentEffort;
-use resources::Map;
+use resources;
 
 /// Activity Types
 #[derive(Debug)]
@@ -89,56 +93,64 @@ pub enum WorkoutType {
 #[allow(dead_code)]
 #[derive(Debug)]
 pub struct Activity {
-    id: i32,
-    resource_state: ResourceState,
-    external_id: String,
-    upload_id: i32,
-    athlete: Athlete,
-    name: String,
-    description: String,
-    distance: f32,
-    moving_time: i32,
-    elapsed_time: i32,
-    total_elevation_gain: f32,
-    activity_type: ActivityType,
-    // start_date: Timespec,
-    // start_date_local: Timespec,
-    timezone: String,
-    start_latlng: (f32, f32),
-    end_latlng: (f32, f32),
-    location_city: String,
-    location_state: String,
-    location_country: String,
-    achievement_count: i32,
-    kudos_count: i32,
-    comment_count: i32,
-    athlete_count: i32,
-    photo_count: i32,
-    map: Map,
-    trainer: bool,
-    commute: bool,
-    manual: bool,
-    private: bool,
-    flagged: bool,
-    workout_type: i32,
-    gear_id: String,
-    // TODO gear: Gear,
-    average_speed: f32,
-    max_speed: f32,
-    average_cadence: f32,
-    average_temp: f32,
-    average_watts: f32,
-    weighted_average_watts: i32,
-    kilojoules: f32,
-    device_watts: bool,
-    max_heartrate: i32,
-    calories: f32,
-    truncated: i32,
-    has_kudoed: bool,
-    segment_efforts: Vec<SegmentEffort>,
-    splits_metric: Vec<Split>,
-    splits_standard: Vec<Split>,
-    best_efforts: Vec<SegmentEffort>
+    // Meta representation
+    pub id: i32,
+    pub resource_state: ResourceState,
+
+    // Summary representation
+    pub external_id: String,
+    pub upload_id: i32,
+    pub athlete: Athlete,
+    pub name: String,
+    pub distance: f32,
+    pub moving_time: i32,
+    pub elapsed_time: i32,
+    pub total_elevation_gain: f32,
+    pub activity_type: ActivityType,
+    pub start_date: String,
+    pub start_date_local: String,
+    // TODO pub start_date: Timespec,
+    // TODO pub start_date_local: Timespec,
+    pub timezone: String,
+    pub start_latlng: (f32, f32),
+    pub end_latlng: (f32, f32),
+    pub location_city: String,
+    pub location_state: String,
+    pub location_country: String,
+    pub achievement_count: i32,
+    pub kudos_count: i32,
+    pub comment_count: i32,
+    pub athlete_count: i32,
+    pub photo_count: i32,
+    pub map: resources::Map,
+    pub trainer: bool,
+    pub commute: bool,
+    pub manual: bool,
+    pub private: bool,
+    pub flagged: bool,
+    pub workout_type: i32,
+    pub gear_id: String,
+    pub average_speed: f32,
+    pub max_speed: f32,
+    pub average_cadence: f32,
+    pub average_temp: f32,
+    pub average_watts: f32,
+    pub weighted_average_watts: i32,
+    pub kilojoules: f32,
+    pub device_watts: bool,
+    pub max_heartrate: i32,
+    pub truncated: i32,
+    pub has_kudoed: bool,
+
+    // Detail represenation
+    pub calories: f32,
+    pub description: String,
+    // TODO pub gear: Gear,
+    pub segment_efforts: Vec<SegmentEffort>,
+    pub splits_metric: Vec<Split>,
+    pub splits_standard: Vec<Split>,
+    pub best_efforts: Vec<SegmentEffort>
+    // TODO pub photos: Photos
 }
 
 #[allow(dead_code)]

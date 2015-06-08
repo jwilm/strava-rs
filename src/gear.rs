@@ -1,3 +1,4 @@
+//! **UNIMPLEMENTED:** Equipment used during an Activity
 use api::ResourceState;
 
 /// Gear type able to represent bikes/shoes/etc.
