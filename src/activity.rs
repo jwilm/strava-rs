@@ -1,50 +1,12 @@
-use std::default::Default;
-
 use rustc_serialize::{Decodable, Decoder};
 
-/// Objects will be returned with a certain ResourceState
-///
-/// Detailed contains the most data and Meta the least.
-#[allow(dead_code)]
-#[derive(Debug, PartialEq, RustcEncodable)]
-pub enum ResourceState {
-    Unknown,
-    Meta,
-    Summary,
-    Detailed
-}
-
-// TODO refactor primitive conversion into custom trait. Maybe add a macro or compiler plugin to
-// handle this.
-impl Decodable for ResourceState {
-    fn decode<D: Decoder>(d: &mut D) -> Result<Self, D::Error> {
-        let num = try!(d.read_u8());
-        Ok(match num {
-            0 => ResourceState::Unknown,
-            1 => ResourceState::Meta,
-            2 => ResourceState::Summary,
-            3 => ResourceState::Detailed,
-            _ =>  unreachable!("ResourceState only valid for 0,1,2,3")
-        })
-    }
-}
-
-impl Default for ResourceState {
-    fn default () -> ResourceState { ResourceState::Unknown }
-}
-
-/// Frame type for bikes
-#[allow(dead_code)]
-#[derive(Debug)]
-pub enum FrameType {
-    MTB,
-    Cross,
-    Road,
-    TimeTrial
-}
+use map::Map;
+use segment;
+use split::Split;
+use athlete::Athlete;
+use ResourceState;
 
 /// Activity Types
-#[allow(dead_code)]
 #[derive(Debug)]
 pub enum ActivityType {
     Ride,
@@ -116,31 +78,6 @@ impl Decodable for ActivityType {
     }
 }
 
-pub enum ValueError {
-    InvalidValue,
-    Other
-}
-
-/// Types of clubs
-#[allow(dead_code)]
-#[derive(Debug)]
-pub enum ClubType {
-    Casual,
-    Racing,
-    Triathlon,
-    Other
-}
-
-/// Types of sports
-#[allow(dead_code)]
-#[derive(Debug)]
-pub enum SportType {
-    Cycling,
-    Running,
-    Triathlon,
-    Other
-}
-
 #[allow(dead_code)]
 #[derive(Debug)]
 pub enum WorkoutType {
@@ -150,22 +87,56 @@ pub enum WorkoutType {
     Intervals
 }
 
-#[cfg(test)]
-mod tests {
-    use std::default::Default;
-
-    use super::ResourceState;
-
-    #[test]
-    fn resource_state_values() {
-        assert_eq!(ResourceState::Meta as i32, 1);
-        assert_eq!(ResourceState::Summary as i32, 2);
-        assert_eq!(ResourceState::Detailed as i32, 3);
-    }
-
-    #[test]
-    fn default_resource_state() {
-        let default_state: ResourceState = Default::default();
-        assert_eq!(default_state, ResourceState::Unknown);
-    }
+#[derive(Debug)]
+pub struct Activity {
+    id: i32,
+    resource_state: ResourceState,
+    external_id: String,
+    upload_id: i32,
+    athlete: Athlete,
+    name: String,
+    description: String,
+    distance: f32,
+    moving_time: i32,
+    elapsed_time: i32,
+    total_elevation_gain: f32,
+    activity_type: ActivityType,
+    // start_date: Timespec,
+    // start_date_local: Timespec,
+    timezone: String,
+    start_latlng: (f32, f32),
+    end_latlng: (f32, f32),
+    location_city: String,
+    location_state: String,
+    location_country: String,
+    achievement_count: i32,
+    kudos_count: i32,
+    comment_count: i32,
+    athlete_count: i32,
+    photo_count: i32,
+    map: Map,
+    trainer: bool,
+    commute: bool,
+    manual: bool,
+    private: bool,
+    flagged: bool,
+    workout_type: i32,
+    gear_id: String,
+    // TODO gear: Gear,
+    average_speed: f32,
+    max_speed: f32,
+    average_cadence: f32,
+    average_temp: f32,
+    average_watts: f32,
+    weighted_average_watts: i32,
+    kilojoules: f32,
+    device_watts: bool,
+    max_heartrate: i32,
+    calories: f32,
+    truncated: i32,
+    has_kudoed: bool,
+    segment_efforts: Vec<segment::Effort>,
+    splits_metric: Vec<Split>,
+    splits_standard: Vec<Split>,
+    best_efforts: Vec<segment::Effort>
 }

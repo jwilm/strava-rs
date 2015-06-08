@@ -1,11 +1,11 @@
-use resources::enums::ResourceState;
-use resources::enums::ActivityType;
-use resources::Athlete;
+use accesstoken::AccessToken;
+use activity::ActivityType;
+use athlete::Athlete;
+use api;
 use error::Result;
 use http;
-use accesstoken::AccessToken;
 use paginate::Paginated;
-use api;
+use ResourceState;
 
 /// A specific section(s) of road.
 ///

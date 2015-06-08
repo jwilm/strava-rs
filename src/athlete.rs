@@ -1,16 +1,16 @@
 use std::option::Option;
 
-// use resources::Club;
-// use resources::Gear;
-use resources::enums::ResourceState;
+use rustc_serialize::{Decoder};
+
+use error::Result;
 
 use http;
 use accesstoken::AccessToken;
 
-use error::Result;
 use api;
 use segment;
 use paginate::Paginated;
+use ResourceState;
 
 /// Athletes are Strava users, Strava users are athletes.
 ///
@@ -114,7 +114,7 @@ impl Athlete {
 mod api_tests {
     use accesstoken::AccessToken;
     use super::Athlete;
-    use resources::enums::ResourceState;
+    use ResourceState;
     use error::ApiError;
 
     #[test]
