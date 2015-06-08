@@ -1,3 +1,5 @@
+//! Specific sections of road and attempts an athlete has made on them
+
 use accesstoken::AccessToken;
 use activity::ActivityType;
 use athlete::Athlete;

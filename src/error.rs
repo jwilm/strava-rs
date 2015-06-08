@@ -1,3 +1,4 @@
+//! Error type for the strava api
 use std::convert::From;
 use std::error::Error;
 use std::fmt::Display;
@@ -11,11 +12,15 @@ use http::Error as HttpError;
 // TODO some of these should take other error types.
 #[derive(Debug)]
 pub enum ApiError {
+    /// The given access token has insufficient permission for accessing the requested resource.
     InvalidAccessToken,
+    /// Error in the underlying http implementation
     Http(HttpError),
+    /// Failed to decode a JSON response from the Strava servers
     InvalidJson(DecoderError)
 }
 
+/// A Result type for strava methods
 pub type Result<T> = ::std::result::Result<T, ApiError>;
 
 impl Error for ApiError {

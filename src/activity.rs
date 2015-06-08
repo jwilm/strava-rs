@@ -87,6 +87,7 @@ pub enum WorkoutType {
     Intervals
 }
 
+#[allow(dead_code)]
 #[derive(Debug)]
 pub struct Activity {
     id: i32,

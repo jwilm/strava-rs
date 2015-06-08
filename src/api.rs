@@ -1,3 +1,4 @@
+//! Helpers for the strava api
 use accesstoken::AccessToken;
 
 #[doc(hidden)]

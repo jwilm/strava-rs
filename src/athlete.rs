@@ -1,3 +1,4 @@
+//! Strava athletes and associated data
 use std::option::Option;
 
 use rustc_serialize::{Decoder};
@@ -10,25 +11,40 @@ use api::{self, Paginated};
 use segment;
 use ResourceState;
 
-/// Athletes are Strava users, Strava users are athletes.
+/// A strava athlete
 ///
-/// The object is returned in detailed, summary or meta representations.
+/// The object may be returned in detailed, summary or meta representations.
 ///
 /// See: http://strava.github.io/api/v3/athlete/
 #[derive(RustcDecodable, Debug)]
 pub struct Athlete {
+    /// Athlete's ID on strava
     pub id: i32,
+    /// The resource state dictates which fields should be safe to unwrap
     pub resource_state: ResourceState,
+    /// First name
     pub firstname: Option<String>,
+    /// Last name
     pub lastname: Option<String>,
+    /// URL to a 62x62 pixel profile picture
     pub profile_medium: Option<String>,
+    /// URL to a 124x124 pixel profile picture
     pub profile: Option<String>,
+    /// home city
     pub city: Option<String>,
+    /// home state
     pub state: Option<String>,
+    /// home country
     pub country: Option<String>,
+    /// gender
     pub sex: Option<String>,
+    /// "pending", "accepted", "blocked" or None - the authenticated athlete’s following status
+    /// of this athlete
     pub friend: Option<String>,
+    /// "pending", "accepted", "blocked" or None - this athlete's following status of the
+    /// authenticated athlete
     pub follower: Option<String>,
+    /// The athlete uses strava's premium features
     pub premium: Option<bool>,
     pub created_at: Option<String>,
     pub updated_at: Option<String>,
@@ -37,13 +53,15 @@ pub struct Athlete {
     pub friend_count: Option<i32>,
     pub mutual_friend_count: Option<i32>,
     pub date_preference: Option<String>,
+    /// feet or meters
     pub measurement_preference: Option<String>,
     pub email: Option<String>,
     pub ftp: Option<i32>,
     pub weight: Option<f32>
-    // pub clubs: Vec<Club>,
-    // pub shoes: Vec<Gear>,
-    // pub bikes: Vec<Gear>
+    // TODO pub athlete_type: u32
+    // TODO pub clubs: Vec<Club>,
+    // TODO pub shoes: Vec<Gear>,
+    // TODO pub bikes: Vec<Gear>
 }
 
 /// Statistics for an athlete
@@ -54,52 +72,59 @@ pub struct Athlete {
 /// http://strava.github.io/api/v3/athlete/#stats
 #[derive(Debug, RustcDecodable)]
 pub struct Stats {
-    biggest_ride_distance: f32,
-    biggest_climb_elevation_gain: f32,
-    recent_ride_totals: RecentTotals,
-    recent_run_totals: RecentTotals,
-    ytd_ride_totals: Totals,
-    ytd_run_totals: Totals,
-    all_ride_totals: Totals,
-    all_run_totals: Totals,
+    pub biggest_ride_distance: f32,
+    pub biggest_climb_elevation_gain: f32,
+    pub recent_ride_totals: RecentTotals,
+    pub recent_run_totals: RecentTotals,
+    pub ytd_ride_totals: Totals,
+    pub ytd_run_totals: Totals,
+    pub all_ride_totals: Totals,
+    pub all_run_totals: Totals,
 }
 
+/// Total statistics for a recent time period
 #[derive(Debug, RustcDecodable)]
 pub struct RecentTotals {
-    count: i32,
-    distance: f32,
-    moving_time: i32,
-    elapsed_time: i32,
-    elevation_gain: f32,
-    achievement_count: i32
+    pub count: i32,
+    pub distance: f32,
+    pub moving_time: i32,
+    pub elapsed_time: i32,
+    pub elevation_gain: f32,
+    pub achievement_count: i32
 }
 
+/// Total statistics for an arbitrary time period
 #[derive(Debug, RustcDecodable)]
 pub struct Totals {
-    count: i32,
-    distance: i32,
-    moving_time: i32,
-    elapsed_time: i32,
-    elevation_gain: i32
+    pub count: i32,
+    pub distance: i32,
+    pub moving_time: i32,
+    pub elapsed_time: i32,
+    pub elevation_gain: i32
 }
 
-
 impl Athlete {
+    /// Get the athlete associated with the given access token
     pub fn get_current(token: &AccessToken) -> Result<Athlete> {
         let url = api::v3(token, "athlete".to_string());
         http::get::<Athlete>(&url[..])
     }
 
+    /// Get an Athlete by id
     pub fn get(token: &AccessToken, id: i32) -> Result<Athlete> {
         let url = api::v3(token, format!("athletes/{}", id));
         http::get::<Athlete>(&url[..])
     }
 
+    /// Get stats for an athlete.
+    ///
+    /// This is only available for the currently authenticated athlete
     pub fn stats(&self, token: &AccessToken) -> Result<Stats> {
         let url = api::v3(token, format!("athletes/{}/stats", self.id));
         http::get::<Stats>(&url[..])
     }
 
+    /// Get all KOMs for the Athlete.
     pub fn koms(&self, token: &AccessToken) -> Result<Paginated<segment::Effort>> {
         let url = api::v3(token, format!("athletes/{}/koms", self.id));
         let efforts = try!(http::get::<Vec<segment::Effort>>(&url[..]));

@@ -16,19 +16,16 @@ mod http;
 mod map;
 mod split;
 
-mod athlete;
-pub use athlete::Athlete;
+pub mod athlete;
 
 mod accesstoken;
 pub use accesstoken::AccessToken;
 
 mod activity;
-pub use activity::Activity;
+// pub use activity::Activity;
 pub use activity::ActivityType;
 
-mod segment;
-pub use segment::Segment;
-pub use segment::Effort as SegmentEffort;
+pub mod segment;
 
 /// Objects will be returned with a certain ResourceState
 ///
