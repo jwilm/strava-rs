@@ -28,7 +28,7 @@ impl<T> Paginated<T> {
     }
 
     /// Get the next page of results
-    pub fn next(&self) -> Option<Paginated<T>> {
+    pub fn fetch_next_page(&self) -> Option<Paginated<T>> {
         unimplemented!();
     }
 
