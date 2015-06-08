@@ -6,10 +6,8 @@ use rustc_serialize::{Decoder};
 use error::Result;
 
 use http;
-use accesstoken::AccessToken;
-use api::{self, Paginated};
+use api::{self, Paginated, AccessToken, ResourceState};
 use segment;
-use ResourceState;
 
 /// A strava athlete
 ///
@@ -135,9 +133,8 @@ impl Athlete {
 #[cfg(feature = "api_test")]
 #[cfg(test)]
 mod api_tests {
-    use accesstoken::AccessToken;
+    use api::{AccessToken, ResourceState};
     use super::Athlete;
-    use ResourceState;
     use error::ApiError;
 
     #[test]

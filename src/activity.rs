@@ -4,7 +4,7 @@ use map::Map;
 use segment;
 use split::Split;
 use athlete::Athlete;
-use ResourceState;
+use api::ResourceState;
 
 /// Activity Types
 #[derive(Debug)]

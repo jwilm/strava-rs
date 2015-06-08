@@ -1,12 +1,9 @@
 //! Specific sections of road and attempts an athlete has made on them
-
-use accesstoken::AccessToken;
 use activity::ActivityType;
 use athlete::Athlete;
-use api::{self, Paginated};
+use api::{self, Paginated, AccessToken, ResourceState};
 use error::Result;
 use http;
-use ResourceState;
 
 /// A specific section(s) of road.
 ///
@@ -108,7 +105,7 @@ impl Effort {
 mod api_tests {
     use super::Segment;
     use super::Effort;
-    use accesstoken::AccessToken;
+    use api::AccessToken;
 
     #[test]
     fn get_segment() {
