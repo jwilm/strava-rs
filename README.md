@@ -17,7 +17,7 @@ use strava::api::AccessToken;
 
 fn main() {
     // Create a token
-    let token = AccessToken::new("<my token>");
+    let token = AccessToken::new("<my token>".to_string());
 
     // Get the athlete associated with the given token
     let athlete = Athlete::get_current(&token).unwrap();
