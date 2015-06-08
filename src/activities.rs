@@ -1,10 +1,9 @@
 use rustc_serialize::{Decodable, Decoder};
 
 use map::Map;
-use segment;
-use split::Split;
-use athlete::Athlete;
+use athletes::Athlete;
 use api::ResourceState;
+use segmentefforts::SegmentEffort;
 
 /// Activity Types
 #[derive(Debug)]
@@ -136,8 +135,12 @@ pub struct Activity {
     calories: f32,
     truncated: i32,
     has_kudoed: bool,
-    segment_efforts: Vec<segment::Effort>,
+    segment_efforts: Vec<SegmentEffort>,
     splits_metric: Vec<Split>,
     splits_standard: Vec<Split>,
-    best_efforts: Vec<segment::Effort>
+    best_efforts: Vec<SegmentEffort>
 }
+
+#[allow(dead_code)]
+#[derive(Debug)]
+pub struct Split;

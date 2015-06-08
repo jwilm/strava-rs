@@ -1,3 +1,5 @@
+use api::ResourceState;
+
 /// Clubs represent groups of athletes on Strava.
 ///
 /// They can be public or private. Only members of private clubs can access

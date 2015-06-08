@@ -1,4 +1,4 @@
-//! Error type for the strava api
+//! Error and Result types for the library
 use std::convert::From;
 use std::error::Error;
 use std::fmt::Display;

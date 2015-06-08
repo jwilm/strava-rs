@@ -7,7 +7,7 @@ use error::Result;
 
 use http;
 use api::{self, Paginated, AccessToken, ResourceState};
-use segment;
+use segmentefforts::SegmentEffort;
 
 /// A strava athlete
 ///
@@ -123,9 +123,9 @@ impl Athlete {
     }
 
     /// Get all KOMs for the Athlete.
-    pub fn koms(&self, token: &AccessToken) -> Result<Paginated<segment::Effort>> {
+    pub fn koms(&self, token: &AccessToken) -> Result<Paginated<SegmentEffort>> {
         let url = api::v3(token, format!("athletes/{}/koms", self.id));
-        let efforts = try!(http::get::<Vec<segment::Effort>>(&url[..]));
+        let efforts = try!(http::get::<Vec<SegmentEffort>>(&url[..]));
         Ok(Paginated::new(url, efforts))
     }
 }

@@ -12,18 +12,21 @@
 extern crate hyper;
 extern crate rustc_serialize;
 
-pub mod error;
+/// Internal http api which currently wraps hyper
+#[doc(hidden)]
+mod http;
 
 pub mod api;
-mod http;
+pub mod error;
+
 mod map;
-mod split;
 
-pub mod athlete;
-
-mod activity;
-// pub use activity::Activity;
-pub use activity::ActivityType;
-
-pub mod segment;
+pub mod activities;
+pub mod athletes;
+pub mod clubs;
+pub mod gear;
+pub mod segmentefforts;
+pub mod segments;
+pub mod streams;
+pub mod uploads;
 
