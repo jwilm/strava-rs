@@ -12,7 +12,7 @@ cp ../circle.yml ./
 
 # Add, commit and push files
 git add -f --all .
-git commit -m "Documentation"
+git commit --author="Joe Wilm <joe@jwilm.com>" -m "Documentation"
 git checkout -b gh-pages
 git remote add origin https://github.com/jwilm/strava-rs.git
 git push -qf origin gh-pages
