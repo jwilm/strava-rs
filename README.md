@@ -3,6 +3,8 @@ strava-rs
 
 Strava API client in Rust
 
+[![Circle CI](https://circleci.com/gh/jwilm/strava-rs.svg?style=svg)](https://circleci.com/gh/jwilm/strava-rs)
+
 ## About
 
 The library currently exposes functions for accessing athletes, segments, and
