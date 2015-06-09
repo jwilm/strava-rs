@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["ActivityType","Activity Types"],["WorkoutType",""]],"struct":[["Activity",""],["Split",""]]});

@@ -1,0 +1,1 @@
+initSidebarItems({"type":[["Result","A Result type for strava methods"]],"enum":[["ApiError","Errors returned by strava API methods"]]});

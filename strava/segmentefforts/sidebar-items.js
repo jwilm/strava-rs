@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["SegmentEffort","An athlete's attempt at a segment (the portion of a ride that covers a segment)"]]});

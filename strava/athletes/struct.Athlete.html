@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Athlete` struct in crate `strava`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Athlete">
+
+    <title>strava::athletes::Athlete - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <section class="sidebar">
+        
+        <p class='location'><a href='../index.html'>strava</a>::<wbr><a href='index.html'>athletes</a></p><script>window.sidebarCurrent = {name: 'Athlete', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>strava</a>::<wbr><a href='index.html'>athletes</a>::<wbr><a class='struct' href=''>Athlete</a><wbr></span><span class='out-of-band'><span id='render-detail'>
+            <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
+        </span><a id='src-2477' href='../../src/strava/athletes.rs.html#18-63'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Athlete {
+    pub id: <a href='http://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>,
+    pub resource_state: <a class='enum' href='../../strava/api/enum.ResourceState.html' title='strava::api::ResourceState'>ResourceState</a>,
+    pub firstname: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;,
+    pub lastname: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;,
+    pub profile_medium: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;,
+    pub profile: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;,
+    pub city: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;,
+    pub state: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;,
+    pub country: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;,
+    pub sex: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;,
+    pub friend: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;,
+    pub follower: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;,
+    pub premium: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>&gt;,
+    pub created_at: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;,
+    pub updated_at: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;,
+    pub approve_followers: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>&gt;,
+    pub follower_count: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>&gt;,
+    pub friend_count: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>&gt;,
+    pub mutual_friend_count: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>&gt;,
+    pub date_preference: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;,
+    pub measurement_preference: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;,
+    pub email: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;,
+    pub ftp: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>&gt;,
+    pub weight: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>&gt;,
+}</pre><div class='docblock'><p>A strava athlete</p>
+
+<p>The object may be returned in detailed, summary or meta representations.</p>
+
+<p>See: <a href="http://strava.github.io/api/v3/athlete/">http://strava.github.io/api/v3/athlete/</a></p>
+</div><h2 class='fields'>Fields</h2>
+<table><tr><td id='structfield.id'><a class='stability Unmarked' title='No stability level'></a><code>id</code></td><td><div class='docblock'><p>Athlete&#39;s ID on strava</p>
+</div></td></tr><tr><td id='structfield.resource_state'><a class='stability Unmarked' title='No stability level'></a><code>resource_state</code></td><td><div class='docblock'><p>The resource state dictates which fields should be safe to unwrap</p>
+</div></td></tr><tr><td id='structfield.firstname'><a class='stability Unmarked' title='No stability level'></a><code>firstname</code></td><td><div class='docblock'><p>First name</p>
+</div></td></tr><tr><td id='structfield.lastname'><a class='stability Unmarked' title='No stability level'></a><code>lastname</code></td><td><div class='docblock'><p>Last name</p>
+</div></td></tr><tr><td id='structfield.profile_medium'><a class='stability Unmarked' title='No stability level'></a><code>profile_medium</code></td><td><div class='docblock'><p>URL to a 62x62 pixel profile picture</p>
+</div></td></tr><tr><td id='structfield.profile'><a class='stability Unmarked' title='No stability level'></a><code>profile</code></td><td><div class='docblock'><p>URL to a 124x124 pixel profile picture</p>
+</div></td></tr><tr><td id='structfield.city'><a class='stability Unmarked' title='No stability level'></a><code>city</code></td><td><div class='docblock'><p>home city</p>
+</div></td></tr><tr><td id='structfield.state'><a class='stability Unmarked' title='No stability level'></a><code>state</code></td><td><div class='docblock'><p>home state</p>
+</div></td></tr><tr><td id='structfield.country'><a class='stability Unmarked' title='No stability level'></a><code>country</code></td><td><div class='docblock'><p>home country</p>
+</div></td></tr><tr><td id='structfield.sex'><a class='stability Unmarked' title='No stability level'></a><code>sex</code></td><td><div class='docblock'><p>gender</p>
+</div></td></tr><tr><td id='structfield.friend'><a class='stability Unmarked' title='No stability level'></a><code>friend</code></td><td><div class='docblock'><p>&quot;pending&quot;, &quot;accepted&quot;, &quot;blocked&quot; or None - the authenticated athlete’s following status
+of this athlete</p>
+</div></td></tr><tr><td id='structfield.follower'><a class='stability Unmarked' title='No stability level'></a><code>follower</code></td><td><div class='docblock'><p>&quot;pending&quot;, &quot;accepted&quot;, &quot;blocked&quot; or None - this athlete&#39;s following status of the
+authenticated athlete</p>
+</div></td></tr><tr><td id='structfield.premium'><a class='stability Unmarked' title='No stability level'></a><code>premium</code></td><td><div class='docblock'><p>The athlete uses strava&#39;s premium features</p>
+</div></td></tr><tr><td id='structfield.created_at'><a class='stability Unmarked' title='No stability level'></a><code>created_at</code></td><td></td></tr><tr><td id='structfield.updated_at'><a class='stability Unmarked' title='No stability level'></a><code>updated_at</code></td><td></td></tr><tr><td id='structfield.approve_followers'><a class='stability Unmarked' title='No stability level'></a><code>approve_followers</code></td><td></td></tr><tr><td id='structfield.follower_count'><a class='stability Unmarked' title='No stability level'></a><code>follower_count</code></td><td></td></tr><tr><td id='structfield.friend_count'><a class='stability Unmarked' title='No stability level'></a><code>friend_count</code></td><td></td></tr><tr><td id='structfield.mutual_friend_count'><a class='stability Unmarked' title='No stability level'></a><code>mutual_friend_count</code></td><td></td></tr><tr><td id='structfield.date_preference'><a class='stability Unmarked' title='No stability level'></a><code>date_preference</code></td><td></td></tr><tr><td id='structfield.measurement_preference'><a class='stability Unmarked' title='No stability level'></a><code>measurement_preference</code></td><td><div class='docblock'><p>feet or meters</p>
+</div></td></tr><tr><td id='structfield.email'><a class='stability Unmarked' title='No stability level'></a><code>email</code></td><td></td></tr><tr><td id='structfield.ftp'><a class='stability Unmarked' title='No stability level'></a><code>ftp</code></td><td></td></tr><tr><td id='structfield.weight'><a class='stability Unmarked' title='No stability level'></a><code>weight</code></td><td></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='struct' href='../../strava/athletes/struct.Athlete.html' title='strava::athletes::Athlete'>Athlete</a></code></h3><div class='impl-items'><h4 id='method.get_current' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.get_current' class='fnname'>get_current</a>(token: &amp;<a class='struct' href='../../strava/api/struct.AccessToken.html' title='strava::api::AccessToken'>AccessToken</a>) -&gt; <a class='type' href='../../strava/error/type.Result.html' title='strava::error::Result'>Result</a>&lt;<a class='struct' href='../../strava/athletes/struct.Athlete.html' title='strava::athletes::Athlete'>Athlete</a>&gt;</code></h4>
+<div class='docblock'><p>Get the athlete associated with the given access token</p>
+</div><h4 id='method.get' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.get' class='fnname'>get</a>(token: &amp;<a class='struct' href='../../strava/api/struct.AccessToken.html' title='strava::api::AccessToken'>AccessToken</a>, id: <a href='http://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>) -&gt; <a class='type' href='../../strava/error/type.Result.html' title='strava::error::Result'>Result</a>&lt;<a class='struct' href='../../strava/athletes/struct.Athlete.html' title='strava::athletes::Athlete'>Athlete</a>&gt;</code></h4>
+<div class='docblock'><p>Get an Athlete by id</p>
+</div><h4 id='method.stats' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.stats' class='fnname'>stats</a>(&amp;self, token: &amp;<a class='struct' href='../../strava/api/struct.AccessToken.html' title='strava::api::AccessToken'>AccessToken</a>) -&gt; <a class='type' href='../../strava/error/type.Result.html' title='strava::error::Result'>Result</a>&lt;<a class='struct' href='../../strava/athletes/struct.Stats.html' title='strava::athletes::Stats'>Stats</a>&gt;</code></h4>
+<div class='docblock'><p>Get stats for an athlete.</p>
+
+<p>This is only available for the currently authenticated athlete</p>
+</div><h4 id='method.koms' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.koms' class='fnname'>koms</a>(&amp;self, token: &amp;<a class='struct' href='../../strava/api/struct.AccessToken.html' title='strava::api::AccessToken'>AccessToken</a>) -&gt; <a class='type' href='../../strava/error/type.Result.html' title='strava::error::Result'>Result</a>&lt;<a class='struct' href='../../strava/api/struct.Paginated.html' title='strava::api::Paginated'>Paginated</a>&lt;<a class='struct' href='../../strava/segmentefforts/struct.SegmentEffort.html' title='strava::segmentefforts::SegmentEffort'>SegmentEffort</a>&gt;&gt;</code></h4>
+<div class='docblock'><p>Get all KOMs for the Athlete.</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><a class='stability Stable' title='Stable'></a><code>impl <a class='trait' href='http://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../../strava/athletes/struct.Athlete.html' title='strava::athletes::Athlete'>Athlete</a></code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><a class='stability Stable' title='Stable'></a><code>fn <a href='http://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#method.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='http://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='http://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
+</div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='http://doc.rust-lang.org/rustc-serialize/rustc_serialize/serialize/trait.Decodable.html' title='rustc_serialize::serialize::Decodable'>Decodable</a> for <a class='struct' href='../../strava/athletes/struct.Athlete.html' title='strava::athletes::Athlete'>Athlete</a></code></h3><div class='impl-items'><h4 id='method.decode' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='http://doc.rust-lang.org/rustc-serialize/rustc_serialize/serialize/trait.Decodable.html#method.decode' class='fnname'>decode</a>&lt;__D: <a class='trait' href='http://doc.rust-lang.org/rustc-serialize/rustc_serialize/serialize/trait.Decoder.html' title='rustc_serialize::serialize::Decoder'>Decoder</a>&gt;(__arg_0: &amp;mut __D) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../strava/athletes/struct.Athlete.html' title='strava::athletes::Athlete'>Athlete</a>, __D&gt;</code></h4>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <div id="help" class="hidden">
+        <div class="shortcuts">
+            <h1>Keyboard shortcuts</h1>
+            <dl>
+                <dt>?</dt>
+                <dd>Show this help dialog</dd>
+                <dt>S</dt>
+                <dd>Focus the search field</dd>
+                <dt>&larrb;</dt>
+                <dd>Move up in search results</dd>
+                <dt>&rarrb;</dt>
+                <dd>Move down in search results</dd>
+                <dt>&#9166;</dt>
+                <dd>Go to active search result</dd>
+            </dl>
+        </div>
+        <div class="infos">
+            <h1>Search tricks</h1>
+            <p>
+                Prefix searches with a type followed by a colon (e.g.
+                <code>fn:</code>) to restrict the search to a given type.
+            </p>
+            <p>
+                Accepted types are: <code>fn</code>, <code>mod</code>,
+                <code>struct</code>, <code>enum</code>,
+                <code>trait</code>, <code>typedef</code> (or
+                <code>tdef</code>).
+            </p>
+        </div>
+    </div>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "strava";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    
+    <script async src="../../search-index.js"></script>
+</body>
+</html>
