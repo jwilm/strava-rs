@@ -11,9 +11,14 @@ cp -r ../target/doc/* .
 cp ../circle.yml ./
 
 # Add, commit and push files
-git add -f --all .
-git commit --author="Joe Wilm <joe@jwilm.com>" -m "Documentation"
+if [ ${CIRCLECI} ]
+then
+    git config user.name "Joe Wilm"
+    git config user.email "joe@jwilm.com"
+fi
 git checkout -b gh-pages
+git add -f --all .
+git commit -m "Documentation"
 git remote add origin https://github.com/jwilm/strava-rs.git
 git push -qf origin gh-pages
 
