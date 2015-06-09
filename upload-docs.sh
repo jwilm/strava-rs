@@ -8,6 +8,7 @@ git init
 
 # Copy over the documentation
 cp -r ../target/doc/* .
+cp ../circle.yml ./
 
 # Add, commit and push files
 git add -f --all .
