@@ -40,3 +40,20 @@ pub enum FrameType {
     Road,
     TimeTrial
 }
+
+#[cfg(feature = "api_test")]
+#[cfg(test)]
+mod api_tests {
+    use super::Gear;
+    use api::AccessToken;
+    #[test]
+    #[test]
+    #[test]
+    fn get_gear() {
+        //TODO find a real way to test this since it only works with gear id's of stuff you own
+        let id = "g2164144".to_string();
+        let token = AccessToken::new_from_env().unwrap();
+        let gear = Gear::get(&token,id);
+        println!("{:?}",gear);
+    }
+}

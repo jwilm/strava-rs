@@ -12,7 +12,6 @@ use http;
 /// representations.
 ///
 /// See: http://strava.github.io/api/v3/clubs/
-#[allow(dead_code)]
 #[derive(Debug, RustcDecodable)]
 pub struct Club {
     id: i32,
@@ -68,4 +67,19 @@ pub enum ClubType {
     shop,
     company,
     other,
+}
+
+#[cfg(feature = "api_test")]
+#[cfg(test)]
+mod api_tests {
+    use super::Club;
+    use api::AccessToken;
+    #[test]
+    #[test]
+    fn get_club() {
+        let id = "1".to_string();
+        let token = AccessToken::new_from_env().unwrap();
+        let club = Club::get(&token,id);
+        println!("{:?}",club);
+    }
 }

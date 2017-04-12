@@ -1,3 +1,3 @@
 //! Types shared by primary strava resources
-#[derive(Debug)]
+#[derive(Debug,RustcDecodable)]
 pub struct Map;
