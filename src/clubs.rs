@@ -1,4 +1,3 @@
-//! **UNIMPLEMENTED:** Groups of athletes on Strava
 use api::ResourceState;
 
 /// Clubs represent groups of athletes on Strava.
@@ -9,25 +8,35 @@ use api::ResourceState;
 ///
 /// See: http://strava.github.io/api/v3/clubs/
 #[allow(dead_code)]
+#[derive(Debug, RustcDecodable)]
 pub struct Club {
     id: i32,
     resource_state: ResourceState,
     name: String,
     profile_medium: String,
     profile: String,
-    description: String,
-    club_type: ClubType,
+    cover_photo: String,
+    cover_photo_small: String,
     sport_type: SportType,
     city: String,
     state: String,
     country: String,
     private: bool,
-    member_count: i32
+    member_count: i32,
+    featured: bool,
+    verified: bool,
+    url: String,
+
+    description: Option<String>,
+    club_type: Option<ClubType>, 
+    membership: Option<String>,
+    admin: Option<bool>,
+    owner: Option<bool>,
+    following_count: Option<i32>,  
 }
 
 /// Types of sports
-#[allow(dead_code)]
-#[derive(Debug)]
+#[derive(Debug, RustcDecodable)]
 pub enum SportType {
     Cycling,
     Running,
@@ -36,8 +45,7 @@ pub enum SportType {
 }
 
 /// Types of clubs
-#[allow(dead_code)]
-#[derive(Debug)]
+#[derive(Debug, RustcDecodable)]
 pub enum ClubType {
     Casual,
     Racing,
