@@ -143,8 +143,6 @@ mod api_tests {
     use api::{AccessToken, ResourceState};
     use super::Athlete;
     use error::ApiError;
-    use gear::Gear;
-    use clubs::Club;
 
     #[test]
     fn get_current_athlete() {
@@ -195,22 +193,5 @@ mod api_tests {
         let token = AccessToken::new_from_env().unwrap();
         let athlete = Athlete::get_current(&token).unwrap();
         println!("{:?}",athlete);
-    }
-
-    #[test]
-    fn get_gear() {
-        //TODO find a real way to test this since it only works with gear id's of stuff you own
-        let id = "g2164144".to_string();
-        let token = AccessToken::new_from_env().unwrap();
-        let gear = Gear::get(&token,id);
-        println!("{:?}",gear);
-    }
-
-    #[test]
-    fn get_club() {
-        let id = "1".to_string();
-        let token = AccessToken::new_from_env().unwrap();
-        let club = Club::get(&token,id);
-        println!("{:?}",club);
     }
 }

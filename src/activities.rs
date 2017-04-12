@@ -1,16 +1,14 @@
-//! **UNIMPLEMENTED:** Base object for Strava runs, rides, swims etc.
-//!
-//! Although there are a couple of types defined here, no endpoints are currently accessible with
-//! this library.
-use rustc_serialize::{Decodable, Decoder};
+//endpoint for reading activities 
+use error::Result;
 
-use api::ResourceState;
+use api::{self, ResourceState, AccessToken};
+use http;
 use athletes::Athlete;
 use segmentefforts::SegmentEffort;
 use resources;
 
 /// Activity Types
-#[derive(Debug)]
+#[derive(Debug,RustcDecodable)]
 pub enum ActivityType {
     Ride,
     Run,
@@ -20,8 +18,8 @@ pub enum ActivityType {
     AlpineSki,
     BackcountrySki,
     Canoeing,
-    CrossCountrySkiing,
     Crossfit,
+    EBikeRide,
     Elliptical,
     IceSkate,
     InlineSkate,
@@ -43,55 +41,18 @@ pub enum ActivityType {
     Unknown
 }
 
-impl Decodable for ActivityType {
-    fn decode<D: Decoder>(d: &mut D) -> Result<ActivityType, D::Error> {
-        d.read_str().map(|s| {
-            match &s[..] {
-                "Ride" => { ActivityType::Ride },
-                "Run" => { ActivityType::Run },
-                "Swim" => { ActivityType::Swim },
-                "Hike" => { ActivityType::Hike },
-                "Walk" => { ActivityType::Walk },
-                "AlpineSki" => { ActivityType::AlpineSki },
-                "BackcountrySki" => { ActivityType::BackcountrySki },
-                "Canoeing" => { ActivityType::Canoeing },
-                "CrossCountrySkiing" => { ActivityType::CrossCountrySkiing },
-                "Crossfit" => { ActivityType::Crossfit },
-                "Elliptical" => { ActivityType::Elliptical },
-                "IceSkate" => { ActivityType::IceSkate },
-                "InlineSkate" => { ActivityType::InlineSkate },
-                "Kayaking" => { ActivityType::Kayaking },
-                "Kitesurf" => { ActivityType::Kitesurf },
-                "NordicSki" => { ActivityType::NordicSki },
-                "RockClimbing" => { ActivityType::RockClimbing },
-                "RollerSki" => { ActivityType::RollerSki },
-                "Rowing" => { ActivityType::Rowing },
-                "Snowboard" => { ActivityType::Snowboard },
-                "Snowshoe" => { ActivityType::Snowshoe },
-                "StairStepper" => { ActivityType::StairStepper },
-                "StandUpPaddling" => { ActivityType::StandUpPaddling },
-                "Surfing" => { ActivityType::Surfing },
-                "WeightTraining" => { ActivityType::WeightTraining },
-                "Windsurf" => { ActivityType::Windsurf },
-                "Workout" => { ActivityType::Workout },
-                "Yoga" => { ActivityType::Yoga }
-                _ => { ActivityType::Unknown }
-            }
-        })
-    }
-}
-
-#[allow(dead_code)]
-#[derive(Debug)]
+#[derive(Debug,RustcDecodable)]
 pub enum WorkoutType {
-    Default,
-    Race,
-    Long,
-    Intervals
+    DefaultRun = 0,
+    RaceRun = 1,
+    LongRun = 2,
+    WorkoutRun = 3,
+    DefaultRide = 10,
+    RaceRide = 11,
+    WorkoutRide = 12,
 }
 
-#[allow(dead_code)]
-#[derive(Debug)]
+#[derive(Debug,RustcDecodable)]
 pub struct Activity {
     // Meta representation
     pub id: i32,
@@ -107,16 +68,11 @@ pub struct Activity {
     pub elapsed_time: i32,
     pub total_elevation_gain: f32,
     pub activity_type: ActivityType,
-    pub start_date: String,
-    pub start_date_local: String,
-    // TODO pub start_date: Timespec,
-    // TODO pub start_date_local: Timespec,
+    pub start_date: String, //TODO decode time from string 
+    pub start_date_local: String, //TODO decode time from string 
     pub timezone: String,
-    pub start_latlng: (f32, f32),
-    pub end_latlng: (f32, f32),
-    pub location_city: String,
-    pub location_state: String,
-    pub location_country: String,
+    pub start_latlng: Cords,
+    pub end_latlng: Cords,
     pub achievement_count: i32,
     pub kudos_count: i32,
     pub comment_count: i32,
@@ -128,7 +84,7 @@ pub struct Activity {
     pub manual: bool,
     pub private: bool,
     pub flagged: bool,
-    pub workout_type: i32,
+    pub workout_type: WorkoutType,
     pub gear_id: String,
     pub average_speed: f32,
     pub max_speed: f32,
@@ -153,6 +109,34 @@ pub struct Activity {
     // TODO pub photos: Photos
 }
 
+#[derive(Debug,RustcDecodable)]
+pub struct Cords{
+    x: f32,
+    y: f32,
+}
+
+impl Activity {
+    /// Get an Gear by id (the only option)
+    pub fn get(token: &AccessToken, id: String) -> Result <Activity> {
+        let url = api::v3(token, format!("activities/{}", id));
+        http::get::<Activity>(&url[..])
+    }
+}
+
 #[allow(dead_code)]
-#[derive(Debug)]
+#[derive(Debug,RustcDecodable)]
 pub struct Split;
+
+#[cfg(feature = "api_test")]
+#[cfg(test)]
+mod api_tests {
+    use super::Activity;
+    use api::AccessToken;
+    #[test]
+    fn get_activity() {
+        let id = "321934".to_string();
+        let token = AccessToken::new_from_env().unwrap();
+        let activity = Activity::get(&token,id);
+        println!("{:?}",activity);
+    }
+}
