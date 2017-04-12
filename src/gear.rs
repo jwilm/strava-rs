@@ -1,5 +1,8 @@
-use api::{ResourceState, AccessToken};
+//Individual pieces of gear
 use error::Result;
+
+use api::{self, ResourceState, AccessToken};
+use http;
 
 /// Gear type able to represent bikes/shoes/etc.
 ///
@@ -21,8 +24,10 @@ pub struct Gear {
 }
 
 impl Gear {
-    pub fn get(token: &AccessToken, id: String) -> Result<String>{
-        Ok("test".to_string())
+    /// Get an Gear by id (the only option)
+    pub fn get(token: &AccessToken, id: String) -> Result<Gear> {
+        let url = api::v3(token, format!("gear/{}", id));
+        http::get::<Gear>(&url[..])
     }
 }
 

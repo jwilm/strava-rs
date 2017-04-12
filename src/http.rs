@@ -65,7 +65,6 @@ impl<'a> Http {
         let ssl = NativeTlsClient::new().unwrap();
         let connector = HttpsConnector::new(ssl);
         let client = Client::with_connector(connector);
-        //let client = hyper::Client::new(ssl);
 
         let mut builder = match method {
             Method::GET => client.get(url),

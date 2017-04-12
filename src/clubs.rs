@@ -13,19 +13,20 @@ pub struct Club {
     id: i32,
     resource_state: ResourceState,
     name: String,
-    profile_medium: String,
-    profile: String,
-    cover_photo: String,
-    cover_photo_small: String,
-    sport_type: SportType,
-    city: String,
-    state: String,
-    country: String,
-    private: bool,
-    member_count: i32,
-    featured: bool,
-    verified: bool,
-    url: String,
+
+    profile_medium: Option<String>,
+    profile: Option<String>,
+    cover_photo: Option<String>,
+    cover_photo_small: Option<String>,
+    sport_type: Option<SportType>,
+    city: Option<String>,
+    state: Option<String>,
+    country: Option<String>,
+    private: Option<bool>,
+    member_count: Option<i32>,
+    featured: Option<bool>,
+    verified: Option<bool>,
+    url: Option<String>,
 
     description: Option<String>,
     club_type: Option<ClubType>, 
@@ -37,18 +38,21 @@ pub struct Club {
 
 /// Types of sports
 #[derive(Debug, RustcDecodable)]
+#[allow(non_camel_case_types)]
 pub enum SportType {
-    Cycling,
-    Running,
-    Triathlon,
-    Other
+    cycling,
+    running,
+    triathlon,
+    other,
 }
 
 /// Types of clubs
 #[derive(Debug, RustcDecodable)]
+#[allow(non_camel_case_types)]
 pub enum ClubType {
-    Casual,
-    Racing,
-    Triathlon,
-    Other
+    casual_club,
+    racing_team,
+    shop,
+    company,
+    other,
 }
