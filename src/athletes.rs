@@ -144,6 +144,7 @@ mod api_tests {
     use super::Athlete;
     use error::ApiError;
     use gear::Gear;
+    use clubs::Club;
 
     #[test]
     fn get_current_athlete() {
@@ -203,5 +204,13 @@ mod api_tests {
         let token = AccessToken::new_from_env().unwrap();
         let gear = Gear::get(&token,id);
         println!("{:?}",gear);
+    }
+
+    #[test]
+    fn get_club() {
+        let id = "1".to_string();
+        let token = AccessToken::new_from_env().unwrap();
+        let club = Club::get(&token,id);
+        println!("{:?}",club);
     }
 }

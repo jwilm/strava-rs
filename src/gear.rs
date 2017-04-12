@@ -33,6 +33,7 @@ impl Gear {
 
 /// Frame type for bikes
 #[derive(Debug, RustcDecodable)]
+#[allow(non_camel_case_types)]
 pub enum FrameType {
     MTB,
     Cross,

@@ -1,4 +1,9 @@
-use api::ResourceState;
+//strava clubs
+use error::Result;
+
+use api::{self, ResourceState, AccessToken};
+use http;
+
 
 /// Clubs represent groups of athletes on Strava.
 ///
@@ -34,6 +39,14 @@ pub struct Club {
     admin: Option<bool>,
     owner: Option<bool>,
     following_count: Option<i32>,  
+}
+
+impl Club {
+    /// Get an Gear by id (the only option)
+    pub fn get(token: &AccessToken, id: String) -> Result <Club> {
+        let url = api::v3(token, format!("clubs/{}", id));
+        http::get::<Club>(&url[..])
+    }
 }
 
 /// Types of sports
