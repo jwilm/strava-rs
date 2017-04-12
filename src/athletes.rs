@@ -55,11 +55,19 @@ pub struct Athlete {
     pub email: Option<String>,
     pub ftp: Option<i32>,
     pub weight: Option<f32>,
-    pub athlete_type: u32,
-    pub clubs: Vec<Club>,
+    //pub athlete_type: Option<AthleteType>,
+    pub athlete_type: Option<i32>,
+    pub clubs: Option<Vec<Club>>,
     //gear
-    pub shoes: Vec<Gear>,
-    pub bikes: Vec<Gear>
+    pub shoes: Option<Vec<Gear>>,
+    pub bikes: Option<Vec<Gear>>,
+}
+
+/// Types of athletes
+#[derive(Debug, RustcDecodable)]
+pub enum AthleteType {
+    Cycling,
+    Running,
 }
 
 /// Statistics for an athlete
@@ -135,6 +143,7 @@ mod api_tests {
     use api::{AccessToken, ResourceState};
     use super::Athlete;
     use error::ApiError;
+    use gear::Gear;
 
     #[test]
     fn get_current_athlete() {
@@ -152,7 +161,6 @@ mod api_tests {
     }
 
     #[test]
-    #[allow(dead_code)]
     fn get_athlete_stats() {
         let token = AccessToken::new_from_env().unwrap();
         let athlete = Athlete::get_current(&token).unwrap();
@@ -186,5 +194,14 @@ mod api_tests {
         let token = AccessToken::new_from_env().unwrap();
         let athlete = Athlete::get_current(&token).unwrap();
         println!("{:?}",athlete);
+    }
+
+    #[test]
+    fn get_gear() {
+        //TODO find a real way to test this since it only works with gear id's of stuff you own
+        let id = "g2164144".to_string();
+        let token = AccessToken::new_from_env().unwrap();
+        let gear = Gear::get(&token,id);
+        println!("{:?}",gear);
     }
 }
