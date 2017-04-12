@@ -3,6 +3,7 @@
 /// module.
 ///
 extern crate hyper;
+extern crate hyper_native_tls;
 
 use std::fmt;
 use std::io::Read;
@@ -13,6 +14,9 @@ use rustc_serialize::json;
 use rustc_serialize::Decodable;
 
 use hyper::status::StatusCode;
+use hyper::Client;
+use hyper::net::HttpsConnector;
+use self::hyper_native_tls::NativeTlsClient;
 
 use error::ApiError;
 
@@ -30,8 +34,6 @@ impl Response {
         self.res.status
     }
 }
-
-use std::fmt::Display;
 
 impl fmt::Display for Response {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -60,7 +62,10 @@ impl<'a> Http {
     }
 
     fn build(&self, method: Method, url: &str) -> Result<Response, Error> {
-        let mut client = hyper::Client::new();
+        let ssl = NativeTlsClient::new().unwrap();
+        let connector = HttpsConnector::new(ssl);
+        let client = Client::with_connector(connector);
+        //let client = hyper::Client::new(ssl);
 
         let mut builder = match method {
             Method::GET => client.get(url),
@@ -129,7 +134,7 @@ mod tests {
 
     #[test]
     fn request_wrapper_can_fetch() {
-        let res = Http::get("http://www.google.com").unwrap();
+        let res = Http::get("http://www.example.com").unwrap();
         let body = res.body;
         assert!(body.contains("doctype html"));
     }

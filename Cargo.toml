@@ -1,8 +1,8 @@
 [package]
 
 name = "strava"
-version = "0.1.1"
-authors = ["Joe Wilm <jdwilm@gmail.com>"]
+version = "0.2.0"
+authors = ["Joe Wilm <jdwilm@gmail.com>", "Hunter Werlla <hunter@werlla.com>"]
 description = "Strava API v3 Client"
 repository = "https://github.com/jwilm/strava-rs"
 documentation = "http://jwilm.io/strava-rs/strava/"
@@ -17,7 +17,10 @@ license = "MPL-2.0"
 api_test = []
 
 [dependencies.hyper]
-version = "~0.5"
+version = "~0.10.8"
 
 [dependencies.rustc-serialize]
 version = "~0.3"
+
+[dependencies.hyper-native-tls]
+version = "~0.2.2"

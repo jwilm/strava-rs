@@ -1,12 +1,11 @@
 //! Strava athletes and associated data
 use std::option::Option;
 
-use rustc_serialize::{Decoder};
-
-
 use api::{self, Paginated, AccessToken, ResourceState};
 use error::Result;
 use http;
+use gear::Gear;
+use clubs::Club;
 use segmentefforts::SegmentEffort;
 
 /// A strava athlete
@@ -14,7 +13,7 @@ use segmentefforts::SegmentEffort;
 /// The object may be returned in detailed, summary or meta representations.
 ///
 /// See: http://strava.github.io/api/v3/athlete/
-#[derive(RustcDecodable, Debug)]
+#[derive(Debug, RustcDecodable)]
 pub struct Athlete {
     /// Athlete's ID on strava
     pub id: i32,
@@ -55,11 +54,12 @@ pub struct Athlete {
     pub measurement_preference: Option<String>,
     pub email: Option<String>,
     pub ftp: Option<i32>,
-    pub weight: Option<f32>
-    // TODO pub athlete_type: u32
-    // TODO pub clubs: Vec<Club>,
-    // TODO pub shoes: Vec<Gear>,
-    // TODO pub bikes: Vec<Gear>
+    pub weight: Option<f32>,
+    pub athlete_type: u32,
+    pub clubs: Vec<Club>,
+    //gear
+    pub shoes: Vec<Gear>,
+    pub bikes: Vec<Gear>
 }
 
 /// Statistics for an athlete
@@ -115,7 +115,6 @@ impl Athlete {
     }
 
     /// Get stats for an athlete.
-    ///
     /// This is only available for the currently authenticated athlete
     pub fn stats(&self, token: &AccessToken) -> Result<Stats> {
         let url = api::v3(token, format!("athletes/{}/stats", self.id));
@@ -149,7 +148,6 @@ mod api_tests {
         let id = 1712082;
         let token = AccessToken::new_from_env().unwrap();
         let athlete = Athlete::get(&token, id).unwrap();
-        println!("{:?}", athlete);
         assert_eq!(athlete.id, id);
     }
 
@@ -181,5 +179,12 @@ mod api_tests {
         let athlete = Athlete::get_current(&token).unwrap();
         let koms = athlete.koms(&token).unwrap();
         println!("{:?}", koms);
+    }
+
+    #[test]
+    fn print_response() {
+        let token = AccessToken::new_from_env().unwrap();
+        let athlete = Athlete::get_current(&token).unwrap();
+        println!("{:?}",athlete);
     }
 }

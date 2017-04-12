@@ -48,13 +48,12 @@ impl<T> Paginated<T> {
 /// The level of detail for the current resource
 ///
 /// Detailed contains the most data and Meta the least.
-#[allow(dead_code)]
 #[derive(Debug, PartialEq, RustcEncodable)]
 pub enum ResourceState {
     Unknown,
     Meta,
     Summary,
-    Detailed
+    Detailed,
 }
 
 // TODO refactor primitive conversion into custom trait. Maybe add a macro or compiler plugin to
